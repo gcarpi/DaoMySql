@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Persistencia.DAO
 {
-    public class ClienteDAO : Interface.IntDAO<Cliente>, IDisposable
+    public class ClienteDAO : Interface.IDAO<Cliente>, IDisposable
     {
-        private Interface.IntConnection _connection;
+        private Interface.IConnection _connection;
 
         public ClienteDAO()
         {

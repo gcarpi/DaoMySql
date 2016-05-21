@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Persistencia.Interface
 {
-    interface IntDAO<T>:IDisposable where T:class, new()
+    interface IDAO<T>:IDisposable where T:class, new()
     {
         bool Inserir(T model);
         bool Atualizar(T model);

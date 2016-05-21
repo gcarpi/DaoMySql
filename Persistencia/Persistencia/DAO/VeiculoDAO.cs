@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace Persistencia.DAO
 {
-    public class VeiculoDAO : Interface.IntDAO<Veiculo>, IDisposable
+    public class VeiculoDAO : Interface.IDAO<Veiculo>, IDisposable
     {
-        private Interface.IntConnection _connection;
+        private Interface.IConnection _connection;
 
         public VeiculoDAO()
         {

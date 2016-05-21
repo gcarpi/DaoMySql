@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Persistencia.Interface
 {
-    interface IntConnection: IDisposable
+    interface IConnection: IDisposable
     {
         MySqlConnection Abrir();
         MySqlConnection Buscar();

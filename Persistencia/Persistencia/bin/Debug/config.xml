@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configs>
-<acesso nome="teste" ip="localhost" login="root" senha="root"/>
+<acesso nome="teste" ip="localhost" login="root" senha="3013"/>
 </configs>

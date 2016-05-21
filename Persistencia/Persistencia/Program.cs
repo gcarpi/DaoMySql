@@ -1,7 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
-using Persistencia.DAO;
-using Persistencia.Modelo;
-using Persistencia.Util;
+using Persistencia.Service;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -16,16 +14,11 @@ namespace Persistencia
     {
         static void Main(string[] args)
         {
-            UsuarioDAO connect = new UsuarioDAO();
-            Usuario user = new Usuario();
-            user.Nome = "Raffa";
-            user.CPF = "fffff";
-            user.Login = "lllll";
-            user.Senha = "hhhhh";
-            user.Status = 1;
+            
             try
             {
-                connect.Inserir(user);
+                if (new UsuarioService().Inserir("rafael", "44.703.066-8", "446.317.558-57", "rafael", "rafael"))
+                    Console.WriteLine("Sucesso!");
             }
             catch(MySqlException e)
             {

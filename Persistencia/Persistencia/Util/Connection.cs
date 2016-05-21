@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Persistencia.Util
 {
-    class Connection: Interface.IntConnection, IDisposable
+    class Connection: Interface.IConnection, IDisposable
     {
         private MySqlConnection _connection;
 
