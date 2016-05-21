@@ -1,0 +1,23 @@
+C:\Users\Matheus\Documents\Visual Studio 2015\Projects\Aula\13-05\Persistencia\Persistencia\bin\Debug\Persistencia.exe.config
+C:\Users\Matheus\Documents\Visual Studio 2015\Projects\Aula\13-05\Persistencia\Persistencia\obj\Debug\Persistencia.csprojResolveAssemblyReference.cache
+C:\Users\Matheus\Documents\Visual Studio 2015\Projects\Aula\13-05\Persistencia\Persistencia\bin\Debug\Persistencia.exe
+C:\Users\Matheus\Documents\Visual Studio 2015\Projects\Aula\13-05\Persistencia\Persistencia\bin\Debug\Persistencia.pdb
+C:\Users\Matheus\Documents\Visual Studio 2015\Projects\Aula\13-05\Persistencia\Persistencia\obj\Debug\Persistencia.exe
+C:\Users\Matheus\Documents\Visual Studio 2015\Projects\Aula\13-05\Persistencia\Persistencia\obj\Debug\Persistencia.pdb
+D:\Downloads\Persistencia\Persistencia\Persistencia\bin\Debug\Persistencia.exe.config
+D:\Downloads\Persistencia\Persistencia\Persistencia\obj\Debug\Persistencia.exe
+D:\Downloads\Persistencia\Persistencia\Persistencia\obj\Debug\Persistencia.pdb
+D:\Downloads\Persistencia\Persistencia\Persistencia\obj\Debug\Persistencia.csprojResolveAssemblyReference.cache
+D:\Downloads\Persistencia\Persistencia\Persistencia\bin\Debug\Persistencia.exe
+D:\Downloads\Persistencia\Persistencia\Persistencia\bin\Debug\Persistencia.pdb
+D:\Downloads\Persistencia\Persistencia\Persistencia\bin\Debug\MySql.Data.dll
+C:\Users\Matheus\Desktop\Projeto\Persistencia\Persistencia\Persistencia\bin\Debug\Persistencia.exe.config
+C:\Users\Matheus\Desktop\Projeto\Persistencia\Persistencia\Persistencia\bin\Debug\Persistencia.exe
+C:\Users\Matheus\Desktop\Projeto\Persistencia\Persistencia\Persistencia\bin\Debug\Persistencia.pdb
+C:\Users\Matheus\Desktop\Projeto\Persistencia\Persistencia\Persistencia\bin\Debug\MySql.Data.dll
+C:\Users\Matheus\Desktop\Projeto\Persistencia\Persistencia\Persistencia\obj\Debug\Persistencia.exe
+C:\Users\Matheus\Desktop\Projeto\Persistencia\Persistencia\Persistencia\obj\Debug\Persistencia.pdb
+C:\Users\alunos\Desktop\Projeto\Persistencia\Persistencia\Persistencia\bin\Debug\Persistencia.exe.config
+C:\Users\alunos\Desktop\Projeto\Persistencia\Persistencia\Persistencia\obj\Debug\Persistencia.exe
+C:\Users\alunos\Desktop\Projeto\Persistencia\Persistencia\Persistencia\obj\Debug\Persistencia.pdb
+C:\Users\Matheus\Desktop\Projeto\Persistencia\Persistencia\Persistencia\obj\Debug\Persistencia.csprojResolveAssemblyReference.cache
