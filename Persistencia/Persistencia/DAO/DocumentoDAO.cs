@@ -20,20 +20,46 @@ namespace Persistencia.DAO
             _connection = new Connection();
         }
 
-        public bool Atualizar(Documento documento)
+        public bool Inserir(Documento documento)
         {
             try
             {
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE DOCUMENTO SET RENAVAM = @RENAVAM, CHASSI = @CHASSI, DATA_LICENCIAMENTO = @DATA_LICENCIAMENTO, COD_VEICULO = @COD_VEICULO, STATUS = @STATUS WHERE COD_DOCUMENTO = @COD_DOCUMENTO";
+                    comando.CommandText = "INSERT INTO DOCUMENTO(RENAVAM,CHASSI,DATA_LICENCIAMENTO,COD_VEICULO, STATUS) VALUES (@RENAVAM,@CHASSI,@DATA_LICENCIAMENTO,@COD_VEICULO, @STATUS);";
 
-                    comando.Parameters.Add("@RENAVAM", MySqlDbType.Text).Value = documento.Renavam;
+                    comando.Parameters.Add("@DATA_RESERVA", MySqlDbType.Text).Value = documento.Renavam;
                     comando.Parameters.Add("@CHASSI", MySqlDbType.Text).Value = documento.Chassi;
                     comando.Parameters.Add("@DATA_LICENCIAMENTO", MySqlDbType.Text).Value = documento.DataLicenciamento;
-                    comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = documento.CodigoVeiculo;
-                    comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = documento.CodigoVeiculo;
+                    comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Text).Value = documento.CodigoVeiculo;
+                    comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = documento.Status;
+
+                    if (comando.ExecuteNonQuery() > 0)
+                        return true;
+                    return false;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+        public bool Remover(Documento documento)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "UPDATE DOCUMENTO SET STATUS = @STATUS WHERE COD_DOCUMENTO = @COD_DOCUMENTO";
+
+                    comando.Parameters.Add("@COD_DOCUMENTO", MySqlDbType.Int16).Value = documento.CodigoDocumento;
                     comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = documento.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
@@ -51,26 +77,21 @@ namespace Persistencia.DAO
             }
         }
 
-        public void Dispose()
-        {
-            _connection.Fechar();
-            GC.SuppressFinalize(this);
-        }
-
-        public bool Inserir(Documento documento)
+        public bool Atualizar(Documento documento)
         {
             try
             {
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO DOCUMENTO(RENAVAM,CHASSI,DATA_LICENCIAMENTO,COD_VEICULO, STATUS) VALUES (@RENAVAM,@CHASSI,@DATA_LICENCIAMENTO,@COD_VEICULO, @STATUS);";
+                    comando.CommandText = "UPDATE DOCUMENTO SET RENAVAM = @RENAVAM, CHASSI = @CHASSI, DATA_LICENCIAMENTO = @DATA_LICENCIAMENTO, COD_VEICULO = @COD_VEICULO, STATUS = @STATUS WHERE COD_DOCUMENTO = @COD_DOCUMENTO";
 
-                    comando.Parameters.Add("@DATA_RESERVA", MySqlDbType.Text).Value = documento.Renavam;
+                    comando.Parameters.Add("@RENAVAM", MySqlDbType.Text).Value = documento.Renavam;
                     comando.Parameters.Add("@CHASSI", MySqlDbType.Text).Value = documento.Chassi;
                     comando.Parameters.Add("@DATA_LICENCIAMENTO", MySqlDbType.Text).Value = documento.DataLicenciamento;
-                    comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Text).Value = documento.CodigoVeiculo;
-                    comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = documento.Status;
+                    comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = documento.CodigoVeiculo;
+                    comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = documento.CodigoVeiculo;
+                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = documento.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;
@@ -123,32 +144,10 @@ namespace Persistencia.DAO
             }
         }
 
-        public bool Remover(Documento documento)
+        public void Dispose()
         {
-            try
-            {
-                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
-                {
-                    comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE DOCUMENTO SET STATUS = @STATUS WHERE COD_DOCUMENTO = @COD_DOCUMENTO";
-
-                    comando.Parameters.Add("@COD_DOCUMENTO", MySqlDbType.Int16).Value = documento.CodigoDocumento;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = documento.Status;
-
-                    if (comando.ExecuteNonQuery() > 0)
-                        return true;
-                    return false;
-                }
-            }
-            catch (MySqlException)
-            {
-                throw;
-            }
-            finally
-            {
-                //teste
-                _connection.Fechar();
-            }
+            _connection.Fechar();
+            GC.SuppressFinalize(this);
         }
     }
 }

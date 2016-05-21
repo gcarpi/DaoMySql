@@ -19,14 +19,14 @@ namespace Persistencia.DAO
             _connection = new Connection();
         }
 
-        public bool Atualizar(Fornecedor fornecedor)
+        public bool Inserir(Fornecedor fornecedor)
         {
             try
             {
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE FORNECEDOR SET COD_FORNECEDOR = @COD_FORNECEDOR, COD_PESSOA_JURIDICA = @COD_PESSOA_JURIDICA, STATUS = @STATUS WHERE COD_FORNECEDOR = @COD_FORNECEDOR";
+                    comando.CommandText = "INSERT INTO FORNECEDOR(COD_FORNECEDOR,COD_PESSOA_JURIDICA,STATUS) VALUES (@COD_FORNECEDOR,@COD_PESSOA_JURIDICA,STATUS);";
 
                     comando.Parameters.Add("@COD_FORNECEDOR", MySqlDbType.Int16).Value = fornecedor.CodigoFornecedor;
                     comando.Parameters.Add("@COD_PESSOA_JURIDICA", MySqlDbType.Int16).Value = fornecedor.CodigoPessoaJuridica;
@@ -47,20 +47,41 @@ namespace Persistencia.DAO
             }
         }
 
-        public void Dispose()
-        {
-            _connection.Fechar();
-            GC.SuppressFinalize(this);
-        }
-
-        public bool Inserir(Fornecedor fornecedor)
+        public bool Remover(Fornecedor fornecedor)
         {
             try
             {
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO FORNECEDOR(COD_FORNECEDOR,COD_PESSOA_JURIDICA,STATUS) VALUES (@COD_FORNECEDOR,@COD_PESSOA_JURIDICA,STATUS);";
+                    comando.CommandText = "UPDATE FORNECEDOR SET STATUS = @STATUS WHERE COD_FORNECEDOR = @COD_FORNECEDOR";
+
+                    comando.Parameters.Add("@COD_FORNECEDOR", MySqlDbType.Int16).Value = fornecedor.CodigoFornecedor;
+                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = fornecedor.Status;
+
+                    if (comando.ExecuteNonQuery() > 0)
+                        return true;
+                    return false;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+        public bool Atualizar(Fornecedor fornecedor)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "UPDATE FORNECEDOR SET COD_FORNECEDOR = @COD_FORNECEDOR, COD_PESSOA_JURIDICA = @COD_PESSOA_JURIDICA, STATUS = @STATUS WHERE COD_FORNECEDOR = @COD_FORNECEDOR";
 
                     comando.Parameters.Add("@COD_FORNECEDOR", MySqlDbType.Int16).Value = fornecedor.CodigoFornecedor;
                     comando.Parameters.Add("@COD_PESSOA_JURIDICA", MySqlDbType.Int16).Value = fornecedor.CodigoPessoaJuridica;
@@ -115,31 +136,10 @@ namespace Persistencia.DAO
             }
         }
 
-        public bool Remover(Fornecedor fornecedor)
+        public void Dispose()
         {
-            try
-            {
-                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
-                {
-                    comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE FORNECEDOR SET STATUS = @STATUS WHERE COD_FORNECEDOR = @COD_FORNECEDOR";
-
-                    comando.Parameters.Add("@COD_FORNECEDOR", MySqlDbType.Int16).Value = fornecedor.CodigoFornecedor;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = fornecedor.Status;
-
-                    if (comando.ExecuteNonQuery() > 0)
-                        return true;
-                    return false;
-                }
-            }
-            catch (MySqlException)
-            {
-                throw;
-            }
-            finally
-            {
-                _connection.Fechar();
-            }
+            _connection.Fechar();
+            GC.SuppressFinalize(this);
         }
     }
 }
