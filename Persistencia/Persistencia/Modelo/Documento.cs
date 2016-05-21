@@ -13,13 +13,14 @@ namespace Persistencia.Modelo
         {
             CodigoDocumento = cod_d;
         }
-        public Documento(int cod_d, string renavam, string chassi, string placa, string data, int cod_v)
+        public Documento(int cod_d, string renavam, string chassi, string placa, string data, int status, int cod_v)
         {
             CodigoDocumento = cod_d;
             Renavam = renavam;
             Chassi = chassi;
             Placa = placa;
             DataLicenciamento = data;
+            Status = status;
             CodigoVeiculo = cod_v;
         }
 
@@ -29,5 +30,6 @@ namespace Persistencia.Modelo
         public string Placa { get; set; }
         public string DataLicenciamento { get; set; }
         public int CodigoVeiculo { get; set; }
+        public int Status { get; set; }
     }
 }

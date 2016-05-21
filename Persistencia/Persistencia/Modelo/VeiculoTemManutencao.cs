@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Persistencia.Modelo
 {
-    class VeiculoTemManutencao
+    public class VeiculoTemManutencao
     {
         public VeiculoTemManutencao() { }
         public VeiculoTemManutencao(int cod_vm)
         {
             CodigoVeiculoTemManutencao= cod_vm;
         }
-        public VeiculoTemManutencao(int cod_vm, string data_p, string data_e, string data_s, int cod_v, int cod_m)
+        public VeiculoTemManutencao(int cod_vm, string data_p, string data_e, string data_s, int cod_v, int cod_m, int status)
         {
             CodigoVeiculoTemManutencao = cod_vm;
             DataPrevista = data_p;
@@ -21,6 +21,7 @@ namespace Persistencia.Modelo
             DataSaida = data_s;
             CodigoVeiculo = cod_v;
             CodigoManutencao = cod_m;
+            Status = status;
         }
         public int CodigoVeiculoTemManutencao { get; set; }
         public string DataPrevista { get; set; }
@@ -28,5 +29,6 @@ namespace Persistencia.Modelo
         public string DataSaida { get; set; }
         public int CodigoVeiculo { get; set; }
         public int CodigoManutencao { get; set; }
+        public int Status { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace Persistencia.Modelo
             CodigoEndereco = cod_e;
         }
 
-        public Endereco(int cod_e, string cep, string bairro, int numero, string cidade, string estado, int cod_f, int cod_c)
+        public Endereco(int cod_e, string cep, string bairro, int numero, string cidade, string estado, int status, int cod_f, int cod_c)
         {
             CodigoEndereco= cod_e;
             CEP = cep;
@@ -23,6 +23,7 @@ namespace Persistencia.Modelo
             Numero = numero;
             Cidade = cidade;
             Estado = estado;
+            Status = status;
             CodigoFornecedor = cod_f;
             CodigoCliente = cod_c;
         }
@@ -33,6 +34,7 @@ namespace Persistencia.Modelo
         public int Numero { get; set; }
         public string Cidade { get; set; }
         public string Estado { get; set; }
+        public int Status { get; set; }
         public int CodigoCliente { get; set; }
         public int CodigoFornecedor { get; set; }
     }

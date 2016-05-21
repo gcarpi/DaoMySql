@@ -23,5 +23,6 @@ namespace Persistencia.Modelo
         public int CodigoItem { get; set; }
         public string Item { get; set; }
         public int CodigoCheckList { get; set; }
+        public int Status { get; set; }
     }
 }

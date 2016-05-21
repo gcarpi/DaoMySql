@@ -13,15 +13,17 @@ namespace Persistencia.Modelo
         {
             CodigoTelefoneCliente = cod_t;
         }
-        public TelefoneCliente(int cod_t, string telefone, int cod_c)
+        public TelefoneCliente(int cod_t, string telefone, int cod_c, int status)
         {
             CodigoTelefoneCliente = cod_t;
             Telefone = telefone;
             CodigoCliente = cod_c;
+            Status = status;
         }
 
         public int CodigoTelefoneCliente { get; set; }
         public string Telefone { get; set; }
         public int CodigoCliente { get; set; }
+        public int Status { get; set; }
     }
 }

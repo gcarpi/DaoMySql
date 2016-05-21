@@ -13,7 +13,7 @@ namespace Persistencia.Modelo
         {
             CodigoPessoaFisica = cod_pf;
         }
-        public PessoaFisica(int cod_pf, string nome, string rg, string cpf, string data_n, string cnh, string passaporte, string naturalidade)
+        public PessoaFisica(int cod_pf, string nome, string rg, string cpf, string data_n, string cnh, string passaporte, string naturalidade, int status)
         {
             CodigoPessoaFisica = cod_pf;
             Nome = nome;
@@ -23,6 +23,7 @@ namespace Persistencia.Modelo
             CNH = cnh;
             Passaporte = passaporte;
             Naturalidade = naturalidade;
+            Status = status;
         }
 
         public int CodigoPessoaFisica { get; set; }
@@ -33,5 +34,6 @@ namespace Persistencia.Modelo
         public string CNH { get; set; }
         public string Passaporte { get; set; }
         public string Naturalidade { get; set; }
+        public int Status { get; set; }
     }
 }
