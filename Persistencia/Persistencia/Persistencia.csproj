@@ -55,6 +55,8 @@
     <Compile Include="DAO\ManutencaoDAO.cs" />
     <Compile Include="DAO\NivelPermissaoDAO.cs" />
     <Compile Include="DAO\PermissaoDAO.cs" />
+    <Compile Include="DAO\PessoaFisicaDAO.cs" />
+    <Compile Include="DAO\PessoaJuridicaDAO.cs" />
     <Compile Include="DAO\ReservaDAO.cs" />
     <Compile Include="DAO\TelefoneClienteDAO.cs" />
     <Compile Include="DAO\TelefoneFornecedorDAO.cs" />
