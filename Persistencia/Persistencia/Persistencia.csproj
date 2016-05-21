@@ -47,7 +47,9 @@
   <ItemGroup>
     <Compile Include="DAO\CategoriaDAO.cs" />
     <Compile Include="DAO\ClienteDAO.cs" />
+    <Compile Include="DAO\DocumentoDAO.cs" />
     <Compile Include="DAO\EnderecoDAO.cs" />
+    <Compile Include="DAO\FornecedorDAO.cs" />
     <Compile Include="DAO\ItemConformidadeDAO.cs" />
     <Compile Include="DAO\ReservaDAO.cs" />
     <Compile Include="DAO\TelefoneClienteDAO.cs" />

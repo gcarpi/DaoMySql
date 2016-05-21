@@ -95,7 +95,7 @@ namespace Persistencia.DAO
                 {
                     List<Documento> documentos = new List<Documento>();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "RENAVAM,CHASSI,DATA_LICENCIAMENTO,COD_VEICULO, STATUS FROM DOCUMENTO WHERE STATUS <> 9;";
+                    comando.CommandText = "SELECT RENAVAM,CHASSI,DATA_LICENCIAMENTO,COD_VEICULO, STATUS FROM DOCUMENTO WHERE STATUS <> 9;";
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     while (leitor.Read())
@@ -106,7 +106,9 @@ namespace Persistencia.DAO
                         documento.DataLicenciamento = leitor["DATA_LICENCIAMENTO"].ToString();
                         documento.CodigoVeiculo = Int16.Parse(leitor["COD_VEICULO"].ToString());
                         documento.Status = Int16.Parse(leitor["STATUS"].ToString());
-                    }
+
+                        documentos.Add(documento);
+                    }   
 
                     return documentos;
                 }
