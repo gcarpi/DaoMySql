@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace Persistencia.DAO
 {
-    class PessoaJuridicaDAO: IDAO<PessoaJuridica>, IDisposable
+    public class PessoaJuridicaDAO: IDAO<PessoaJuridica>, IDisposable
     {
-        private Interface.IConnection _connection;
+        private Connection _connection;
 
         public PessoaJuridicaDAO()
         {
@@ -27,7 +27,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO PESSOA_FISICA (INSCRICAO_ESTADUAL,RAZAO_SOCIAL,CNPJ,NOME_FANTASIA,STATUS) VALUES (@INSCRICAO_ESTADUAL,@RAZAO_SOCIAL,@CNPJ,@NOME_FANTASIA,@STATUS);";
+                    comando.CommandText = "INSERT INTO PESSOA_JURIDICA (INSCRICAO_ESTADUAL,RAZAO_SOCIAL,CNPJ,NOME_FANTASIA,STATUS) VALUES (@INSCRICAO_ESTADUAL,@RAZAO_SOCIAL,@CNPJ,@NOME_FANTASIA,@STATUS);";
 
                     comando.Parameters.Add("@INSCRICAO_ESTADUAL", MySqlDbType.Text).Value = pessoa.InscricaoEstadual;
                     comando.Parameters.Add("@RAZAO_SOCIAL", MySqlDbType.Text).Value = pessoa.RazaoSocial;
@@ -84,7 +84,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE USUARIO SET PESSOA_JURIDICA INSCRICAO_ESTADUAL = @INSCRICAO_ESTADUAL, RAZAO_SOCIAL = @RAZAO_SOCIAL, CNPJ = @CNPJ, NOME_FANTASIA = @NOME_FANTASIA WHERE COD_PESSOA_JURIDICA = @COD_PESSOA_JURIDICA;";
+                    comando.CommandText = "UPDATE PESSOA_JURIDICA SET INSCRICAO_ESTADUAL = @INSCRICAO_ESTADUAL, RAZAO_SOCIAL = @RAZAO_SOCIAL, CNPJ = @CNPJ, NOME_FANTASIA = @NOME_FANTASIA WHERE COD_PESSOA_JURIDICA = @COD_PESSOA_JURIDICA;";
 
                     comando.Parameters.Add("@INSCRICAO_ESTADUAL", MySqlDbType.Text).Value = pessoa.InscricaoEstadual;
                     comando.Parameters.Add("@RAZAO_SOCIAL", MySqlDbType.Text).Value = pessoa.RazaoSocial;

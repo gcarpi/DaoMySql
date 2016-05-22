@@ -13,7 +13,7 @@ namespace Persistencia.DAO
 {
     public class ManutencaoDAO: IDAO<Manutencao>, IDisposable
     {
-        private Interface.IConnection _connection;
+        private Connection _connection;
 
         public ManutencaoDAO()
         {
@@ -82,7 +82,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE USUARIO SET TIPO_MANUTENCAO = @TIPO_MANUTENCAO, OBSERVACAO = @OBSERVACAO WHERE COD_MANUTENCAO = @COD_MANUTENCAO;";
+                    comando.CommandText = "UPDATE MANUTENCAO SET TIPO_MANUTENCAO = @TIPO_MANUTENCAO, OBSERVACAO = @OBSERVACAO WHERE COD_MANUTENCAO = @COD_MANUTENCAO;";
 
                     comando.Parameters.Add("@TIPO_MANUTENCAO", MySqlDbType.Int16).Value = manutencao.TipoManutencao;
                     comando.Parameters.Add("@OBSERVACAO", MySqlDbType.Text).Value = manutencao.Observacao;

@@ -13,7 +13,7 @@ namespace Persistencia.DAO
 {
     public class NivelPermissaoDAO: IDAO<NivelPermissaoUsuario>, IDisposable
     {
-        private Interface.IConnection _connection;
+        private Connection _connection;
 
         public NivelPermissaoDAO()
         {
@@ -27,7 +27,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO NIVEL_PERMISSAO (NIVEL_PERMISSAO,STATUS,COD_USUARIO) VALUES (@NIVEL_PERMISSAO,@STATUS,@COD_USUARIO);";
+                    comando.CommandText = "INSERT INTO NIVEL_PERMISSAO_USUARIO (NIVEL_PERMISSAO,STATUS,COD_USUARIO) VALUES (@NIVEL_PERMISSAO,@STATUS,@COD_USUARIO);";
 
                     comando.Parameters.Add("@NIVEL_PERMISSAO", MySqlDbType.Text).Value = nivel.NivelPermissao;
                     comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = nivel.Status;
@@ -55,7 +55,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE NIVEL_PERMISSAO SET STATUS = @STATUS WHERE COD_NIVEL_PERMISSAO = @COD_NIVEL_PERMISSAO";
+                    comando.CommandText = "UPDATE NIVEL_PERMISSAO_USUARIO SET STATUS = @STATUS WHERE COD_NIVEL_PERMISSAO = @COD_NIVEL_PERMISSAO";
 
                     comando.Parameters.Add("@COD_NIVEL_PERMISSAO", MySqlDbType.Int16).Value = nivel.CodigoNivelPermissaoUsuario;
                     comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = nivel.Status;
@@ -84,7 +84,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE SET NIVEL_PERMISSAO = @NIVEL_PERMISSAO, STATUS = @STATUS, COD_USUARIO = @COD_USUARIO WHERE COD_NIVEL_PERMISSAO = @COD_NIVEL_PERMISSAO;";
+                    comando.CommandText = "UPDATE NIVEL_PERMISSAO_USUARIO SET NIVEL_PERMISSAO = @NIVEL_PERMISSAO, STATUS = @STATUS, COD_USUARIO = @COD_USUARIO WHERE COD_NIVEL_PERMISSAO = @COD_NIVEL_PERMISSAO;";
                     comando.Parameters.Add("@NIVEL_PERMISSAO", MySqlDbType.Text).Value = nivel.NivelPermissao;
                     comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = nivel.Status;
                     comando.Parameters.Add("@COD_USUARIO", MySqlDbType.Int16).Value = nivel.CodigoUsuario;

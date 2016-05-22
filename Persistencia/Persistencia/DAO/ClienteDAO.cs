@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Persistencia.Interface;
 using Persistencia.Modelo;
 using Persistencia.Util;
 using System;
@@ -10,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace Persistencia.DAO
 {
-    public class ClienteDAO : Interface.IDAO<Cliente>, IDisposable
+    public class ClienteDAO : IDAO<Cliente>, IDisposable
     {
-        private Interface.IConnection _connection;
+        private Connection _connection;
 
         public ClienteDAO()
         {

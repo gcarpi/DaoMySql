@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Persistencia.Interface;
 using Persistencia.Modelo;
 using Persistencia.Util;
 using System;
@@ -10,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace Persistencia.DAO
 {
-    public class EnderecoDAO : Interface.IDAO<Endereco>, IDisposable
+    public class EnderecoDAO : IDAO<Endereco>, IDisposable
     {
-        private Interface.IConnection _connection;
+        private Connection _connection;
 
         public EnderecoDAO()
         {
@@ -87,7 +88,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE USUARIO SET ENDERECO COD_ENDERECO = @COD_ENDERECO, CEP = @CEP, BAIRRO = @BAIRRO, NUMERO = @NUMERO, CIDADE = @CIDADE, ESTADO = @ESTADO WHERE COD_ENDERECO = @COD_ENDERECO;";
+                    comando.CommandText = "UPDATE ENDERECO SET ENDERECO COD_ENDERECO = @COD_ENDERECO, CEP = @CEP, BAIRRO = @BAIRRO, NUMERO = @NUMERO, CIDADE = @CIDADE, ESTADO = @ESTADO WHERE COD_ENDERECO = @COD_ENDERECO;";
 
                     comando.Parameters.Add("@COD_ENDERECO", MySqlDbType.Int16).Value = endereco.CodigoEndereco;
                     comando.Parameters.Add("@CEP", MySqlDbType.Text).Value = endereco.CEP;

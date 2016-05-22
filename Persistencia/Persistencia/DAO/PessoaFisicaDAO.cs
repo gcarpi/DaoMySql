@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace Persistencia.DAO
 {
-    class PessoaFisicaDAO: IDAO<PessoaFisica>, IDisposable
+    public class PessoaFisicaDAO: IDAO<PessoaFisica>, IDisposable
     {
-        private Interface.IConnection _connection;
+        private Connection _connection;
 
         public PessoaFisicaDAO()
         {
@@ -86,7 +86,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE USUARIO SET PESSOA_FISICA NOME = @NOME, RG = @RG, CPF = @CPF, DATA_NASCIMENTO = @DATA_NASCIMENTO, CNH = @CNH, PASSAPORTE = @PASSAPORTE, NATURALIDADE = @NATURALIDADE WHERE COD_PESSOA_FISICA = @COD_PESSOA_FISICA;";
+                    comando.CommandText = "UPDATE  PESSOA_FISICA SET NOME = @NOME, RG = @RG, CPF = @CPF, DATA_NASCIMENTO = @DATA_NASCIMENTO, CNH = @CNH, PASSAPORTE = @PASSAPORTE, NATURALIDADE = @NATURALIDADE WHERE COD_PESSOA_FISICA = @COD_PESSOA_FISICA;";
 
                     comando.Parameters.Add("@COD_PESSOA_FISICA", MySqlDbType.Int16).Value = pessoa.CodigoPessoaFisica;
                     comando.Parameters.Add("@NOME", MySqlDbType.Text).Value = pessoa.Nome;

@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Persistencia.Interface;
 using Persistencia.Modelo;
 using Persistencia.Util;
 using System;
@@ -10,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace Persistencia.DAO
 {
-    public class TelefoneClienteDAO : Interface.IDAO<TelefoneCliente>, IDisposable
+    public class TelefoneClienteDAO : IDAO<TelefoneCliente>, IDisposable
     {
-        private Interface.IConnection _connection;
+        private Connection _connection;
 
         public TelefoneClienteDAO()
         {
@@ -54,9 +55,9 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE TELEFONECLIENTE SET STATUS = @STATUS WHERE COD_TELEFONE_CLIENTE = @COD_TELEFONE_CLIENTE";
+                    comando.CommandText = "UPDATE TELEFONE_CLIENTE SET STATUS = @STATUS WHERE COD_TELEFONE_CLIENTE = @COD_TELEFONE_CLIENTE";
 
-                    comando.Parameters.Add("@COD_TELEFONECLIENTE", MySqlDbType.Int16).Value = telefone.CodigoTelefoneCliente;
+                    comando.Parameters.Add("@COD_TELEFONE_CLIENTE", MySqlDbType.Int16).Value = telefone.CodigoTelefoneCliente;
                     comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = telefone.Status;
                     
 

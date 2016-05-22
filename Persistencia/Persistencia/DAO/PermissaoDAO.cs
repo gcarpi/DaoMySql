@@ -13,7 +13,7 @@ namespace Persistencia.DAO
 {
     public class PermissaoDAO: IDAO<Permissao>, IDisposable
     {
-        private Interface.IConnection _connection;
+        private Connection _connection;
 
         public PermissaoDAO()
         {

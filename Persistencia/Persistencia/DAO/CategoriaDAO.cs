@@ -83,7 +83,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE SET NOME = @NOME, VALOR = @VALOR, STATUS = @STATUS WHERE COD_CATEGORIA = @COD_CATEGORIA;";
+                    comando.CommandText = "UPDATE CATEGORIA SET NOME = @NOME, VALOR = @VALOR, STATUS = @STATUS WHERE COD_CATEGORIA = @COD_CATEGORIA;";
 
                     comando.Parameters.Add("@NOME", MySqlDbType.Text).Value = categoria.Nome;
                     comando.Parameters.Add("@VALOR", MySqlDbType.Decimal).Value = categoria.Valor;

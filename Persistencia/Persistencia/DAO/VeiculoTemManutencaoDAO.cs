@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Persistencia.Interface;
 using Persistencia.Modelo;
 using Persistencia.Util;
 using System;
@@ -10,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace Persistencia.DAO
 {
-    public class VeiculoTemManutencaoDAO : Interface.IDAO<VeiculoTemManutencao>, IDisposable
+    public class VeiculoTemManutencaoDAO : IDAO<VeiculoTemManutencao>, IDisposable
     {
-        private Interface.IConnection _connection;
+        private Connection _connection;
 
         public VeiculoTemManutencaoDAO()
         {
@@ -85,7 +86,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE SET DATA_PREVISTA = @DATA_PREVISTA, DATA_ENTREGA = @DATA_ENTREGA, DATA_SAIDA = @DATA_SAIDA ,STATUS = @STATUS WHERE COD_VEICULO_TEM_MANUTENCAO = @COD_VEICULO_TEM_MANUTENCAO;";
+                    comando.CommandText = "UPDATE VEICULO_TEM_MANUTENCAO SET DATA_PREVISTA = @DATA_PREVISTA, DATA_ENTREGA = @DATA_ENTREGA, DATA_SAIDA = @DATA_SAIDA ,STATUS = @STATUS WHERE COD_VEICULO_TEM_MANUTENCAO = @COD_VEICULO_TEM_MANUTENCAO;";
                     comando.Parameters.Add("@DATA_PREVISTA", MySqlDbType.Text).Value = veiculomanutencao.DataPrevista;
                     comando.Parameters.Add("@DATA_ENTREGA", MySqlDbType.Text).Value = veiculomanutencao.DataEntrega;
                     comando.Parameters.Add("@DATA_SAIDA", MySqlDbType.Text).Value = veiculomanutencao.DataSaida;

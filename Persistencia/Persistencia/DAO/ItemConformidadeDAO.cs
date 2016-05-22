@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using Persistencia.Interface;
 using Persistencia.Modelo;
 using Persistencia.Util;
 using System;
@@ -10,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace Persistencia.DAO
 {
-    public class ItemConformidadeDAO : Interface.IDAO<ItemConformidade>, IDisposable
+    public class ItemConformidadeDAO : IDAO<ItemConformidade>, IDisposable
     {
-        private Interface.IConnection _connection;
+        private Connection _connection;
 
         public ItemConformidadeDAO()
         {
@@ -82,7 +83,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE SET ITEM = @ITEM, STATUS = @STATUS WHERE COD_ITEM = @COD_ITEM;";
+                    comando.CommandText = "UPDATE ITEM_CONFORMIDADE SET ITEM = @ITEM, STATUS = @STATUS WHERE COD_ITEM = @COD_ITEM;";
                     comando.Parameters.Add("@ITEM", MySqlDbType.Text).Value = item.Item;
                     comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = item.Status;
 

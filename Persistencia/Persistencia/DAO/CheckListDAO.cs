@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 
 namespace Persistencia.DAO
 {
-    class CheckListDAO: IDAO<CheckList>,IDisposable
+    public class CheckListDAO: IDAO<CheckList>,IDisposable
     {
-        private Interface.IConnection _connection;
+        private Connection _connection;
 
         public CheckListDAO()
         {

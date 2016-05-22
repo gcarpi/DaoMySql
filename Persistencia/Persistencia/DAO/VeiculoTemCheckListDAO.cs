@@ -13,7 +13,7 @@ namespace Persistencia.DAO
 {
     public class VeiculoTemCheckListDAO: IDAO<VeiculoTemCheckList>, IDisposable
     {
-        private Interface.IConnection _connection;
+        private Connection _connection;
 
         public VeiculoTemCheckListDAO()
         {
@@ -57,7 +57,7 @@ namespace Persistencia.DAO
                     comando.CommandType = CommandType.Text;
                     comando.CommandText = "UPDATE VEICULO_TEM_CHECKLIST SET STATUS = @STATUS WHERE COD_VEICULO_TEM_CHECKLIST = @COD_VEICULO_TEM_CHECKLIST";
 
-                    comando.Parameters.Add("@COD_VEICULO_TEM_MANUTENCAO", MySqlDbType.Int16).Value = veiculochecklist.CodigoVeiculoTemCheckList;
+                    comando.Parameters.Add("@COD_VEICULO_TEM_CHECKLIST", MySqlDbType.Int16).Value = veiculochecklist.CodigoVeiculoTemCheckList;
                     comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = veiculochecklist.Status;
 
 

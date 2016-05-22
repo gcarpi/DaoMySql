@@ -13,7 +13,7 @@ namespace Persistencia.DAO
 {
     public class DocumentoDAO : IDAO<Documento>, IDisposable
     {
-        private Interface.IConnection _connection;
+        private Connection _connection;
 
         public DocumentoDAO()
         {
@@ -151,4 +151,3 @@ namespace Persistencia.DAO
         }
     }
 }
-    

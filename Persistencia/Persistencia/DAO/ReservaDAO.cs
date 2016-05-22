@@ -13,7 +13,7 @@ namespace Persistencia.DAO
 {
     public class ReservaDAO: IDAO<Reserva>,IDisposable
     {
-        private Interface.IConnection _connection;
+        private Connection _connection;
 
         public ReservaDAO()
         {
@@ -89,7 +89,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE USUARIO SET DATA_RESERVA = @DATA_RESERVA, FORMA_PAGAMENTO = @FORMA_PAGAMENTO, TIPO_RETIRADA = @TIPO_RETIRADA, DATA_ENTREGA = @DATA_ENTREGA, DATA_RETIRADA = @DATA_RETIRADA, SITUACAO = @SITUACAO, COD_CLIENTE = @COD_CLIENTE, COD_USUARIO = @COD_USUARIO, COD_VEICULO = @COD_VEICULO WHERE COD_RESERVA = @COD_RESERVA;";
+                    comando.CommandText = "UPDATE RESERVA SET DATA_RESERVA = @DATA_RESERVA, FORMA_PAGAMENTO = @FORMA_PAGAMENTO, TIPO_RETIRADA = @TIPO_RETIRADA, DATA_ENTREGA = @DATA_ENTREGA, DATA_RETIRADA = @DATA_RETIRADA, SITUACAO = @SITUACAO, COD_CLIENTE = @COD_CLIENTE, COD_USUARIO = @COD_USUARIO, COD_VEICULO = @COD_VEICULO WHERE COD_RESERVA = @COD_RESERVA;";
 
                     comando.Parameters.Add("@DATA_RESERVA", MySqlDbType.Text).Value = reserva.DataReserva;
                     comando.Parameters.Add("@FORMA_PAGAMENTO", MySqlDbType.Int16).Value = reserva.FormaPagamento;
