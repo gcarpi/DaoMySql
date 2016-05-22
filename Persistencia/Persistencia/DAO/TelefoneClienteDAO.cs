@@ -175,5 +175,34 @@ namespace Persistencia.DAO
             GC.SuppressFinalize(this);
         }
 
+        bool IDAO<TelefoneCliente>.Inserir(TelefoneCliente model)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IDAO<TelefoneCliente>.Atualizar(TelefoneCliente model)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IDAO<TelefoneCliente>.Remover(TelefoneCliente model)
+        {
+            throw new NotImplementedException();
+        }
+
+        TelefoneCliente IDAO<TelefoneCliente>.Buscar(int cod)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<TelefoneCliente> IDAO<TelefoneCliente>.Listar()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IDisposable.Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

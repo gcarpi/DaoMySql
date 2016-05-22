@@ -143,7 +143,7 @@ namespace Persistencia.DAO
             {
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
-                    Manutencao manutencaos = new Manutencao();
+                    Manutencao manutencao = new Manutencao();
                     comando.CommandType = CommandType.Text;
                     comando.CommandText = "SELECT COD_MANUTENCAO,TIPO_MANUTENCAO,OBSERVACAO,STATUS FROM MANUTENCAO WHERE STATUS <> 9 AND COD_MANUTENCAO = @COD_MANUTENCAO;";
 
