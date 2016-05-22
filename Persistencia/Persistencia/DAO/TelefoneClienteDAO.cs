@@ -20,7 +20,7 @@ namespace Persistencia.DAO
             _connection = new Connection();
         }
 
-        public bool Inserir(TelefoneCliente telefone)
+        public long Inserir(TelefoneCliente telefone)
         {
             try
             {
@@ -34,8 +34,8 @@ namespace Persistencia.DAO
                     comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = telefone.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
-                        return true;
-                    return false;
+                        return comando.LastInsertedId;
+                    return -1;
                 }
             }
             catch (MySqlException)
@@ -136,7 +136,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public TelefoneCliente Listar(int cod)
+        public TelefoneCliente Buscar(int cod)
         {
             try
             {
@@ -168,41 +168,11 @@ namespace Persistencia.DAO
             }
         }
 
-
         public void Dispose()
         {
             _connection.Fechar();
             GC.SuppressFinalize(this);
         }
 
-        bool IDAO<TelefoneCliente>.Inserir(TelefoneCliente model)
-        {
-            throw new NotImplementedException();
-        }
-
-        bool IDAO<TelefoneCliente>.Atualizar(TelefoneCliente model)
-        {
-            throw new NotImplementedException();
-        }
-
-        bool IDAO<TelefoneCliente>.Remover(TelefoneCliente model)
-        {
-            throw new NotImplementedException();
-        }
-
-        TelefoneCliente IDAO<TelefoneCliente>.Buscar(int cod)
-        {
-            throw new NotImplementedException();
-        }
-
-        List<TelefoneCliente> IDAO<TelefoneCliente>.Listar()
-        {
-            throw new NotImplementedException();
-        }
-
-        void IDisposable.Dispose()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

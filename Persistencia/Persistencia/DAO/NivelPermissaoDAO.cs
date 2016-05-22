@@ -20,7 +20,7 @@ namespace Persistencia.DAO
             _connection = new Connection();
         }
 
-        public bool Inserir(NivelPermissaoUsuario nivel)
+        public long Inserir(NivelPermissaoUsuario nivel)
         {
             try
             {
@@ -34,8 +34,8 @@ namespace Persistencia.DAO
                     comando.Parameters.Add("@COD_USUARIO", MySqlDbType.Int16).Value = nivel.CodigoUsuario;
 
                     if (comando.ExecuteNonQuery() > 0)
-                        return true;
-                    return false;
+                        return comando.LastInsertedId;
+                    return -1;
                 }
             }
             catch (MySqlException)

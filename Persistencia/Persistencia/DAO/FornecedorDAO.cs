@@ -20,7 +20,7 @@ namespace Persistencia.DAO
             _connection = new Connection();
         }
 
-        public bool Inserir(Fornecedor fornecedor)
+        public long Inserir(Fornecedor fornecedor)
         {
             try
             {
@@ -34,8 +34,8 @@ namespace Persistencia.DAO
                     comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = fornecedor.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
-                        return true;
-                    return false;
+                        return comando.LastInsertedId;
+                    return -1;
                 }
             }
             catch (MySqlException)

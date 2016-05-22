@@ -1,4 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
+using Persistencia.DAO;
+using Persistencia.Modelo;
 using Persistencia.Service;
 using System;
 using System.Collections.Generic;
@@ -17,8 +19,18 @@ namespace Persistencia
             
             try
             {
-                if (new UsuarioService().Inserir("rafael", "44.703.066-8", "446.317.558-57", "rafael", "rafael"))
-                    Console.WriteLine("Sucesso!");
+                Usuario user = new Usuario();
+                long id;
+                user.CodigoPermissao = 0;
+                user.Senha = "rrrrr";
+                user.Login = "rffffr";
+                user.Nome = "ffffff";
+                user.CPF = "eeeeeeeee";
+                user.RG = "rrrrrrr";
+                user.CodigoPermissao = 1;
+                UsuarioDAO u = new UsuarioDAO();
+                if ((id = u.Inserir(user)) != -1)
+                    Console.WriteLine("Sucesso! {0}",id);
             }
             catch(MySqlException e)
             {

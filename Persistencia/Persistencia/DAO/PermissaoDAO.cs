@@ -20,7 +20,7 @@ namespace Persistencia.DAO
             _connection = new Connection();
         }
 
-        public bool Inserir(Permissao permissao)
+        public long Inserir(Permissao permissao)
         {
             try
             {
@@ -36,8 +36,8 @@ namespace Persistencia.DAO
                     comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = permissao.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
-                        return true;
-                    return false;
+                        return comando.LastInsertedId;
+                    return -1;
                 }
             }
             catch (MySqlException)

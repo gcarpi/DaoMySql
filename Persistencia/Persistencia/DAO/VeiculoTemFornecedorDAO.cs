@@ -20,7 +20,7 @@ namespace Persistencia.DAO
             _connection = new Connection();
         }
 
-        public bool Inserir(VeiculoTemFornecedor veiculofornecedor)
+        public long Inserir(VeiculoTemFornecedor veiculofornecedor)
         {
             try
             {
@@ -33,8 +33,8 @@ namespace Persistencia.DAO
                     comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = veiculofornecedor.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
-                        return true;
-                    return false;
+                        return comando.LastInsertedId;
+                    return -1;
                 }
             }
             catch (MySqlException)
@@ -135,7 +135,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public VeiculoTemFornecedor Buscar()
+        public VeiculoTemFornecedor Buscar(int cod)
         {
             try
             {
@@ -145,7 +145,7 @@ namespace Persistencia.DAO
                     comando.CommandType = CommandType.Text;
                     comando.CommandText = "SELECT COD_VEICULO_TEM_FORNECEDOR, STATUS FROM VEICULO_TEM_FORNECEDOR WHERE STATUS <> 9 AND COD_VEICULO_TEM_FORNECEDOR = @COD_VEICULO_TEM_FORNECEDOR;";
 
-                    comando.Parameters.Add("@COD_VEICULO_TEM_FORNECEDOR",MySqlDbType.Int16).Value = veiculofornecedor.CodigoVeiculoTemFornecedor; 
+                    comando.Parameters.Add("@COD_VEICULO_TEM_FORNECEDOR",MySqlDbType.Int16).Value = cod; 
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     if (leitor.Read())
@@ -172,36 +172,6 @@ namespace Persistencia.DAO
         {
             _connection.Fechar();
             GC.SuppressFinalize(this);
-        }
-
-        bool IDAO<VeiculoTemFornecedor>.Inserir(VeiculoTemFornecedor model)
-        {
-            throw new NotImplementedException();
-        }
-
-        bool IDAO<VeiculoTemFornecedor>.Atualizar(VeiculoTemFornecedor model)
-        {
-            throw new NotImplementedException();
-        }
-
-        bool IDAO<VeiculoTemFornecedor>.Remover(VeiculoTemFornecedor model)
-        {
-            throw new NotImplementedException();
-        }
-
-        VeiculoTemFornecedor IDAO<VeiculoTemFornecedor>.Buscar(int cod)
-        {
-            throw new NotImplementedException();
-        }
-
-        List<VeiculoTemFornecedor> IDAO<VeiculoTemFornecedor>.Listar()
-        {
-            throw new NotImplementedException();
-        }
-
-        void IDisposable.Dispose()
-        {
-            throw new NotImplementedException();
         }
     }
 }

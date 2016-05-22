@@ -20,7 +20,7 @@ namespace Persistencia.DAO
             _connection = new Connection();
         }
 
-        public bool Inserir(Endereco endereco)
+        public long Inserir(Endereco endereco)
         {
             try
             {
@@ -40,8 +40,8 @@ namespace Persistencia.DAO
                     comando.Parameters.Add("@COD_CLIENTE", MySqlDbType.Int16).Value = endereco.CodigoCliente;
 
                     if (comando.ExecuteNonQuery() > 0)
-                        return true;
-                    return false;
+                        return comando.LastInsertedId;
+                    return -1;
                 }
             }
             catch (MySqlException)

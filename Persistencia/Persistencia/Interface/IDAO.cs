@@ -8,7 +8,7 @@ namespace Persistencia.Interface
 {
     interface IDAO<T>:IDisposable where T:class, new()
     {
-        bool Inserir(T model);
+        long Inserir(T model);
         bool Atualizar(T model);
         bool Remover(T model);
         T Buscar(int cod);

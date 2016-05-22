@@ -18,7 +18,7 @@ namespace Persistencia.Service
             userDAO = new UsuarioDAO();
         }
         
-        public bool Inserir(string nome, string rg, string cpf, string login, string senha)
+        public long Inserir(string nome, string rg, string cpf, string login, string senha)
         {
 
             if (isNotNULL(nome, rg, cpf, login, senha))
@@ -26,7 +26,7 @@ namespace Persistencia.Service
                     isLimitCaract(login, 5, 15) && isLimitCaract(senha, 5, 15))
                     if (isAllCaract(nome) && isRG(rg) && isCPF(cpf))
                         return userDAO.Inserir(new Usuario(nome, rg, cpf, login, senha));
-            return false;
+            return -1;
         }
 
         public bool Atualizar(int cod_u, string nome, string rg, string cpf, string login, string senha)

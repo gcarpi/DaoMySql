@@ -20,7 +20,7 @@ namespace Persistencia.DAO
             _connection = new Connection();
         }
 
-        public bool Inserir(Documento documento)
+        public long Inserir(Documento documento)
         {
             try
             {
@@ -36,8 +36,8 @@ namespace Persistencia.DAO
                     comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = documento.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
-                        return true;
-                    return false;
+                        return comando.LastInsertedId;
+                    return -1;
                 }
             }
             catch (MySqlException)
