@@ -28,3 +28,10 @@ C:\Users\Rafa\Desktop\Projeto\Projeto\Persistencia\Persistencia\Persistencia\bin
 C:\Users\Rafa\Desktop\Projeto\Projeto\Persistencia\Persistencia\Persistencia\bin\Debug\Persistencia.pdb
 C:\Users\Rafa\Desktop\Projeto\Projeto\Persistencia\Persistencia\Persistencia\bin\Debug\MySql.Data.dll
 C:\Users\Rafa\Desktop\Projeto\Projeto\Persistencia\Persistencia\Persistencia\obj\Debug\Persistencia.csprojResolveAssemblyReference.cache
+C:\Users\Rafa\Documents\GitHub\DaoMySql\Persistencia\Persistencia\bin\Debug\Persistencia.exe.config
+C:\Users\Rafa\Documents\GitHub\DaoMySql\Persistencia\Persistencia\obj\Debug\Persistencia.exe
+C:\Users\Rafa\Documents\GitHub\DaoMySql\Persistencia\Persistencia\obj\Debug\Persistencia.pdb
+C:\Users\Rafa\Documents\GitHub\DaoMySql\Persistencia\Persistencia\bin\Debug\Persistencia.exe
+C:\Users\Rafa\Documents\GitHub\DaoMySql\Persistencia\Persistencia\bin\Debug\Persistencia.pdb
+C:\Users\Rafa\Documents\GitHub\DaoMySql\Persistencia\Persistencia\bin\Debug\MySql.Data.dll
+C:\Users\Rafa\Documents\GitHub\DaoMySql\Persistencia\Persistencia\obj\Debug\Persistencia.csprojResolveAssemblyReference.cache
