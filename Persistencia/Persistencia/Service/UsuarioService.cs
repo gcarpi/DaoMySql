@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Persistencia.Service
 {
-    class UsuarioService
+    public class UsuarioService
     {
         private UsuarioDAO userDAO;
 
@@ -52,6 +52,11 @@ namespace Persistencia.Service
         public bool Ativar(int cod_user)
         {
             return userDAO.Remover(new Usuario(cod_user, 1));
+        }
+
+        public bool Autenticar(string login, string senha)
+        {
+            return (isLogin(login) && isSenha(senha));
         }
 
         public Usuario Busca(int id)
