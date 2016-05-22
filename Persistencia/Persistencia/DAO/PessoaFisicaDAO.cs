@@ -152,6 +152,45 @@ namespace Persistencia.DAO
             }
         }
 
+        public PessoaFisica Buscar(int cod)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    PessoaFisica pessoa = new PessoaFisica();
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COD_PESSOA_FISICA,NOME,RG,CPF,DATA_NASCIMENTO,CNH,PASSAPORTE,NATURALIDADE,STATUS FROM PESSOA_FISICA WHERE STATUS <> 9 AND COD_PESSOA_FISICA = @COD_PESSOA_FISICA;";
+
+                    comando.Parameters.Add("@COD_PESSOA_FISICA", MySqlDbType.Int16).Value = cod;
+                    MySqlDataReader leitor = comando.ExecuteReader();
+
+                    if (leitor.Read())
+                    {
+                        pessoa.CodigoPessoaFisica = Int16.Parse(leitor["COD_PESSOA_FISICA"].ToString());
+                        pessoa.Nome = leitor["NOME"].ToString();
+                        pessoa.RG = leitor["RG"].ToString();
+                        pessoa.CPF = leitor["CPF"].ToString();
+                        pessoa.DataNascimento = leitor["DATA_NASCIMENTO"].ToString();
+                        pessoa.CNH = leitor["CNH"].ToString();
+                        pessoa.Passaporte = leitor["PASSAPORTE"].ToString();
+                        pessoa.CNH = leitor["NATURALIDADE"].ToString();
+                        pessoa.Status = Int16.Parse(leitor["STATUS"].ToString());
+                    }
+
+                    return pessoa;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
         public void Dispose()
         {
             _connection.Fechar();

@@ -141,6 +141,41 @@ namespace Persistencia.DAO
             }
         }
 
+        public Permissao Buscar(int cod)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    Permissao permissao = new Permissao();
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COD_PERMISSAO,TIPO,NIVEL_PERMISSAO,DESCRICAO,STATUS FROM PERMISSAO WHERE STATUS <> 9 AND COD_PERMISSAO = @COD_PERMISSAO;";
+
+                    comando.Parameters.Add("@COD_PERMISSAO",MySqlDbType.Int16).Value = cod;
+                    MySqlDataReader leitor = comando.ExecuteReader();
+
+                    if (leitor.Read())
+                    {
+                        permissao.CodigoPermissao = Int16.Parse(leitor["COD_PERMISSAO"].ToString());
+                        permissao.Tipo = Int16.Parse(leitor["TIPO"].ToString());
+                        permissao.NivelPermissao = Int16.Parse(leitor["NIVEL_PERMISSAO"].ToString());
+                        permissao.Descricao = leitor["DESCRICAO"].ToString();
+                        permissao.Status = Int16.Parse(leitor["STATUS"].ToString());
+                    }
+
+                    return permissao;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
         public void Dispose()
         {
             _connection.Fechar();

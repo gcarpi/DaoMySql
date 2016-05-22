@@ -136,7 +136,39 @@ namespace Persistencia.DAO
             }
         }
 
-        
+        public ItemConformidade Buscar(int cod)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    ItemConformidade item = new ItemConformidade();
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COD_ITEM,ITEM,STATUS FROM ITEM_CONFORMIDADE WHERE STATUS <> 9; AND COD_ITEM = @COD_ITEM";
+
+                    comando.Parameters.Add("@COD_ITEM",MySqlDbType.Int16).Value = cod;
+                    MySqlDataReader leitor = comando.ExecuteReader();
+
+                    if (leitor.Read())
+                    {
+                        item.CodigoItem = Int16.Parse(leitor["COD_ITEM"].ToString());
+                        item.Item = leitor["ITEM"].ToString();
+                        item.Status = Int16.Parse(leitor["STATUS"].ToString());
+                    }
+
+                    return item;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
         public void Dispose()
         {
             _connection.Fechar();

@@ -145,6 +145,41 @@ namespace Persistencia.DAO
             }
         }
 
+        public Usuario Buscar(int cod)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    Usuario user = new Usuario();
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COD_USUARIO,NOME,CPF,LOGIN,SENHA,STATUS FROM USUARIO WHERE STATUS <> 9 AND COD_USUARIO = @COD_USUARIO;";
+
+                    comando.Parameters.Add("@COD_USUARIO",MySqlDbType.Int16).Value = cod;
+                    MySqlDataReader leitor = comando.ExecuteReader();
+
+                    if (leitor.Read())
+                    {
+                        user.CodigoUsuario = Int16.Parse(leitor["COD_USUARIO"].ToString());
+                        user.Nome = leitor["NOME"].ToString();
+                        user.CPF = leitor["CPF"].ToString();
+                        user.Login = leitor["LOGIN"].ToString();
+                        user.Senha = leitor["SENHA"].ToString();
+                        user.Status = Int16.Parse(leitor["STATUS"].ToString());
+                    }
+                    return user;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
         public void Dispose()
         {
             _connection.Fechar();

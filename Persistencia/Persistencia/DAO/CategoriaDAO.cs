@@ -139,7 +139,40 @@ namespace Persistencia.DAO
             }
         }
 
-        
+        public Categoria Buscar(int cod)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    Categoria categoria = new Categoria();
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COD_CATEGORIA,NOME,VALOR,STATUS FROM CATEGORIA WHERE STATUS <> 9 AND COD_CATEGORIA = @COD_CATEGORIA;";
+
+                    comando.Parameters.Add("@COD_CATEGORIA", MySqlDbType.Int16).Value = cod;
+                    MySqlDataReader leitor = comando.ExecuteReader();
+
+                    if (leitor.Read())
+                    {
+                        categoria.CodigoCategoria = Int16.Parse(leitor["COD_CATEGORIA"].ToString());
+                        categoria.Nome = leitor["NOME"].ToString();
+                        categoria.Valor = decimal.Parse(leitor["VALOR"].ToString());
+                        categoria.Status = Int16.Parse(leitor["STATUS"].ToString());
+                    }
+
+                    return categoria;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
         public void Dispose()
         {
             _connection.Fechar();

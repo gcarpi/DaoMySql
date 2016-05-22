@@ -134,6 +134,39 @@ namespace Persistencia.DAO
             }
         }
 
+        public CheckList Buscar(int cod)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    CheckList checklist = new CheckList();
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COD_CHECKLIST,OBSERVACAO,STATUS FROM CHECKLIST WHERE STATUS <> 9 AND COD_CHECKLIST = @COD_CHECKLIST;";
+
+                    comando.Parameters.Add("@COD_CHECKLIST",MySqlDbType.Int16).Value = cod;
+                    MySqlDataReader leitor = comando.ExecuteReader();
+
+                    if (leitor.Read())
+                    {
+                        checklist.CodigoCheckList = Int16.Parse(leitor["COD_CHECKLIST"].ToString());
+                        checklist.Observacao = leitor["OBSERVACAO"].ToString();
+                        checklist.Status = Int16.Parse(leitor["STATUS"].ToString());
+                    }
+
+                    return checklist;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
         public void Dispose()
         {
             _connection.Fechar();

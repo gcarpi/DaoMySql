@@ -152,6 +152,45 @@ namespace Persistencia.DAO
             }
         }
 
+        public Endereco Buscar(int cod)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    Endereco endereco = new Endereco();
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COD_ENDERECO,CEP,BAIRRO,NUMERO,CIDADE,ESTADO,STATUS,COD_FORNECEDOR,COD_CLIENTE FROM ENDERECO WHERE STATUS <> 9 AND COD_ENDERECO = @COD_ENDERECO;";
+
+                    comando.Parameters.Add("COD_ENDERECO", MySqlDbType.Int16).Value = cod;
+                    MySqlDataReader leitor = comando.ExecuteReader();
+
+                    if (leitor.Read())
+                    {
+                        endereco.CodigoEndereco = Int16.Parse(leitor["COD_ENDERECO"].ToString());
+                        endereco.CEP = leitor["CEP"].ToString();
+                        endereco.Bairro = leitor["BAIRRO"].ToString();
+                        endereco.Numero = Int16.Parse(leitor["NUMERO"].ToString());
+                        endereco.Cidade = leitor["CIDADE"].ToString();
+                        endereco.Estado = leitor["ESTADO"].ToString();
+                        endereco.Status = Int16.Parse(leitor["STATUS"].ToString());
+                        endereco.CodigoFornecedor = Int16.Parse(leitor["COD_FORNECEDOR"].ToString());
+                        endereco.CodigoCliente = Int16.Parse(leitor["COD_CLIENTE"].ToString());
+                    }
+
+                    return endereco;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
         public void Dispose()
         {
             _connection.Fechar();

@@ -143,7 +143,42 @@ namespace Persistencia.DAO
             }
         }
 
-        
+        public VeiculoTemManutencao Buscar(int cod)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    VeiculoTemManutencao veiculomanutencao = new VeiculoTemManutencao();
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COD_VEICULO_TEM_MANUTENCAO,DATA_PREVISTA,DATA_ENTREGA,DATA_SAIDA,STATUS FROM VEICULO_TEM_MANUTENCAO WHERE STATUS <> 9 AND COD_VEICULO_TEM_MANUTENCAO = @COD_VEICULO_TEM_MANUTENCAO;";
+
+                    comando.Parameters.Add("@COD_VEICULO_TEM_MANUTENCAO",MySqlDbType.Int16).Value = cod;
+                    MySqlDataReader leitor = comando.ExecuteReader();
+
+                    if (leitor.Read())
+                    {
+                        veiculomanutencao.CodigoVeiculoTemManutencao = Int16.Parse(leitor["COD_VEICULO_TEM_MANUTENCAO"].ToString());
+                        veiculomanutencao.DataPrevista = leitor["DATA_PREVISTA"].ToString();
+                        veiculomanutencao.DataEntrega = leitor["DATA_ENTREGA"].ToString();
+                        veiculomanutencao.DataSaida = leitor["DATA_SAIDA"].ToString();
+                        veiculomanutencao.Status = Int16.Parse(leitor["STATUS"].ToString());
+                    }
+
+                    return veiculomanutencao;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+
         public void Dispose()
         {
             _connection.Fechar();

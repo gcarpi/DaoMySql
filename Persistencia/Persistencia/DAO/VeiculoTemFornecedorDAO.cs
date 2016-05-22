@@ -135,7 +135,39 @@ namespace Persistencia.DAO
             }
         }
 
-        
+        public VeiculoTemFornecedor Buscar()
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    VeiculoTemFornecedor veiculofornecedor = new VeiculoTemFornecedor();
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COD_VEICULO_TEM_FORNECEDOR, STATUS FROM VEICULO_TEM_FORNECEDOR WHERE STATUS <> 9 AND COD_VEICULO_TEM_FORNECEDOR = @COD_VEICULO_TEM_FORNECEDOR;";
+
+                    comando.Parameters.Add("@COD_VEICULO_TEM_FORNECEDOR",MySqlDbType.Int16).Value = cod;
+                    MySqlDataReader leitor = comando.ExecuteReader();
+
+                    if (leitor.Read())
+                    {
+                        veiculofornecedor.CodigoVeiculoTemFornecedor = Int16.Parse(leitor["COD_VEICULO_TEM_FORNECEDOR"].ToString());
+                        veiculofornecedor.Status = Int16.Parse(leitor["STATUS"].ToString());
+                    }
+
+                    return veiculofornecedor;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+
         public void Dispose()
         {
             _connection.Fechar();

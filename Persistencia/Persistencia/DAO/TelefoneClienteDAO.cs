@@ -136,7 +136,39 @@ namespace Persistencia.DAO
             }
         }
 
-        
+        public TelefoneCliente Listar(int cod)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    TelefoneCliente telefone = new TelefoneCliente();
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COD_TELEFONE_CLIENTE, STATUS FROM TELEFONE_CLIENTE  WHERE STATUS <> 9 AND COD_TELEFONE_CLIENTE = @COD_TELEFONE_CLIENTE;";
+
+                    comando.Parameters.Add("@COD_TELEFONE_CLIENTE",MySqlDbType.Int16).Value = cod;
+                    MySqlDataReader leitor = comando.ExecuteReader();
+
+                    if (leitor.Read())
+                    {
+                        telefone.CodigoTelefoneCliente = Int16.Parse(leitor["COD_TELEFONE_CLIENTE"].ToString());
+                        telefone.Status = Int16.Parse(leitor["STATUS"].ToString());
+                    }
+
+                    return telefone;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+
         public void Dispose()
         {
             _connection.Fechar();

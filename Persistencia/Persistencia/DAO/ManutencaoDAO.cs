@@ -137,6 +137,40 @@ namespace Persistencia.DAO
             }
         }
 
+        public Manutencao Buscar(int cod)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    Manutencao manutencaos = new Manutencao();
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COD_MANUTENCAO,TIPO_MANUTENCAO,OBSERVACAO,STATUS FROM MANUTENCAO WHERE STATUS <> 9 AND COD_MANUTENCAO = @COD_MANUTENCAO;";
+
+                    comando.Parameters.Add("COD_MANUTENCAO", MySqlDbType.Int16).Value = cod;
+                    MySqlDataReader leitor = comando.ExecuteReader();
+
+                    if (leitor.Read())
+                    {
+                        manutencao.CodigoManutencao = Int16.Parse(leitor["COD_MANUTENCAO"].ToString());
+                        manutencao.TipoManutencao = Int16.Parse(leitor["TIPO_MANUTENCAO"].ToString());
+                        manutencao.Observacao = leitor["OBSERVACAO"].ToString();
+                        manutencao.Status = Int16.Parse(leitor["STATUS"].ToString());
+                    }
+
+                    return manutencao;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
         public void Dispose()
         {
             _connection.Fechar();

@@ -9,6 +9,7 @@ namespace Persistencia.Util
 {
     class Util
     {
+
         public static Config GetConfigs()
         {
             XElement xml = XElement.Load("config.xml").Element("acesso");

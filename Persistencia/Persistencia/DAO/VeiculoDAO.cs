@@ -168,6 +168,50 @@ namespace Persistencia.DAO
             }
         }
 
+        public Veiculo Buscar(int cod)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    Veiculo veiculo = new Veiculo();
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COD_VEICULO,MARCA,MODELO,ANO_DE_FABRICACAO,CONDICAO,VIDRO_ELETRICO,TRAVA_ELETRICA,AUTOMATICO,QUANTIDADE_PORTAS,DIRECAO_HIDRAULICA,COR,AR_CONDICIONADO,COD_CATEGORIA,STATUS FROM VEICULO WHERE STATUS <> 9 AND COD_VEICULO = @COD_VEICULO;";
+
+                    comando.Parameters.Add("@COD_VEICULO",MySqlDbType.Int16).Value = cod;
+                    MySqlDataReader leitor = comando.ExecuteReader();
+
+                    if (leitor.Read())
+                    {
+                        veiculo.CodigoVeiculo = int.Parse(leitor["COD_VEICULO"].ToString());
+                        veiculo.Marca = leitor["MARCA"].ToString();
+                        veiculo.Modelo = leitor["MODELO"].ToString();
+                        veiculo.AnoFabricação = leitor["ANO_DE_FABRICACAO"].ToString();
+                        veiculo.Condicao = leitor["CONDICAO"].ToString();
+                        veiculo.VidroEletrico = bool.Parse(leitor["VIDRO_ELETRICO"].ToString());
+                        veiculo.TravaEletrica = bool.Parse(leitor["TRAVA_ELETRICA"].ToString());
+                        veiculo.Automatico = bool.Parse(leitor["AUTOMATICO"].ToString());
+                        veiculo.QuantidadePortas = int.Parse(leitor["QUANTIDADE_PORTAS"].ToString());
+                        veiculo.DirecaoHidraulica = bool.Parse(leitor["DIRECAO_HIDRAULICA"].ToString());
+                        veiculo.Cor = leitor["COR"].ToString();
+                        veiculo.ArCondicionado = bool.Parse(leitor["AR_CONDICIONADO"].ToString());
+                        veiculo.CodigoCategoria = int.Parse(leitor["COD_CATEGORIA"].ToString());
+                        veiculo.Status = int.Parse(leitor["STATUS"].ToString());
+                    }
+
+                    return veiculo;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
         public void Dispose()
         {
             _connection.Fechar();

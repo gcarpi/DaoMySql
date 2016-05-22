@@ -134,6 +134,38 @@ namespace Persistencia.DAO
             }
         }
 
+        public Cliente Buscar(int cod)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    Cliente cliente = new Cliente();
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COD_CLIENTE,EMAIL,STATUS FROM CLIENTE WHERE STATUS <> 9 AND COD_CLIENTE = @COD_CLIENTE;";
+                    comando.Parameters.Add("@COD_CLIENTE", MySqlDbType.Int16).Value = cod;
+                    MySqlDataReader leitor = comando.ExecuteReader();
+
+                    if (leitor.Read())
+                    {
+                        cliente.CodigoCliente = Int16.Parse(leitor["COD_CLIENTE"].ToString());
+                        cliente.Email = leitor["EMAIL"].ToString();
+                        cliente.Status = Int16.Parse(leitor["STATUS"].ToString());
+                    }
+
+                    return cliente;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
         public void Dispose()
         {
             _connection.Fechar();

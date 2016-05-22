@@ -137,6 +137,38 @@ namespace Persistencia.DAO
             }
         }
 
+        public Fornecedor Buscar(int cod)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    Fornecedor fornecedor = new Fornecedor();
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COD_FORNECEDOR,COD_PESSOA_JURIDICA,STATUS FROM FORNECEDOR WHERE STATUS <> 9 AND COD_FORNECEDOR = @COD_FORNECEDOR;";
+                    comando.Parameters.Add("COD_FORNECEDOR", MySqlDbType.Int16).Value = cod;
+                    MySqlDataReader leitor = comando.ExecuteReader();
+
+                    if (leitor.Read())
+                    {
+                        fornecedor.CodigoFornecedor = Int16.Parse(leitor["COD_FORNECEDOR"].ToString());
+                        fornecedor.CodigoPessoaJuridica = Int16.Parse(leitor["COD_PESSOA_JURIDICA"].ToString());
+                        fornecedor.Status = Int16.Parse(leitor["STATUS"].ToString());
+                    }
+
+                    return fornecedor;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
         public void Dispose()
         {
             _connection.Fechar();

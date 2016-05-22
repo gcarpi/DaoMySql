@@ -144,6 +144,42 @@ namespace Persistencia.DAO
             }
         }
 
+        public PessoaJuridica Buscar(int cod)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    PessoaJuridica pessoa = new PessoaJuridica();
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COD_PESSOA_JURIDICA,INSCRICAO_ESTADUAL,RAZAO_SOCIAL,CNPJ,NOME_FANTASIA,STATUS FROM PESSOA_JURIDICA WHERE STATUS <> 9 AND COD_PESSOA_JURIDICA = @COD_PESSOA_JURIDICA;";
+
+                    comando.Parameters.Add("@COD_PESSOA_JURIDICA",MySqlDbType.Int16).Value = cod;
+                    MySqlDataReader leitor = comando.ExecuteReader();
+
+                    if (leitor.Read())
+                    {
+                        pessoa.CodigoPessoaJuridica = Int16.Parse(leitor["COD_PESSOA_JURIDICA"].ToString());
+                        pessoa.InscricaoEstadual = leitor["INSCRICAO_ESTADUAL"].ToString();
+                        pessoa.RazaoSocial = leitor["RAZAO_SOCIAL"].ToString();
+                        pessoa.CNPJ = leitor["CNPJ"].ToString();
+                        pessoa.NomeFantasia = leitor["NOME_FANTASIA"].ToString();
+                        pessoa.Status = Int16.Parse(leitor["STATUS"].ToString());
+                    }
+
+                    return pessoa;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
         public void Dispose()
         {
             _connection.Fechar();

@@ -116,12 +116,13 @@ namespace Persistencia.DAO
                 {
                     List<Documento> documentos = new List<Documento>();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT RENAVAM,CHASSI,DATA_LICENCIAMENTO,COD_VEICULO, STATUS FROM DOCUMENTO WHERE STATUS <> 9;";
+                    comando.CommandText = "SELECT COD_DOCUMENTO,RENAVAM,CHASSI,DATA_LICENCIAMENTO,COD_VEICULO, STATUS FROM DOCUMENTO WHERE STATUS <> 9;";
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     while (leitor.Read())
                     {
                         Documento documento = new Documento();
+                        documento.CodigoDocumento = Int16.Parse(leitor["COD_DOCUMENTO"].ToString());
                         documento.Renavam = leitor["RENAVAM"].ToString();
                         documento.Chassi = leitor["CHASSI"].ToString();
                         documento.DataLicenciamento = leitor["DATA_LICENCIAMENTO"].ToString();
@@ -132,6 +133,42 @@ namespace Persistencia.DAO
                     }   
 
                     return documentos;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+        public Documento Buscar(int cod)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    Documento documento = new Documento();
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COD_DOCUMENTO,RENAVAM,CHASSI,DATA_LICENCIAMENTO,COD_VEICULO, STATUS FROM DOCUMENTO WHERE STATUS <> 9 AND COD_DOCUMENTO = @COD_DOCUMENTO;";
+
+                    comando.Parameters.Add("@COD_DOCUMENETO", MySqlDbType.Int16).Value = cod;
+                    MySqlDataReader leitor = comando.ExecuteReader();
+
+                    if (leitor.Read())
+                    {
+                        documento.CodigoDocumento = Int16.Parse(leitor["COD_DOCUMENTO"].ToString());
+                        documento.Renavam = leitor["RENAVAM"].ToString();
+                        documento.Chassi = leitor["CHASSI"].ToString();
+                        documento.DataLicenciamento = leitor["DATA_LICENCIAMENTO"].ToString();
+                        documento.CodigoVeiculo = Int16.Parse(leitor["COD_VEICULO"].ToString());
+                        documento.Status = Int16.Parse(leitor["STATUS"].ToString());
+                    }
+
+                    return documento;
                 }
             }
             catch (MySqlException)

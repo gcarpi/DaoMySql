@@ -141,6 +141,41 @@ namespace Persistencia.DAO
             }
         }
 
+        public VeiculoTemCheckList Buscar(int cod)
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    VeiculoTemCheckList veiculochecklist = new VeiculoTemCheckList();
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COD_VEICULO_TEM_CHECKLIST,COD_VEICULO,COD_CHECKLIST,DATA_CHECAGEM,STATUS FROM VEICULO_TEM_CHECKLIST WHERE STATUS <> 9 AND COD_VEICULO_TEM_CHECKLIST = @COD_VEICULO_TEM_CHECKLIST;";
+
+                    comando.Parameters.Add("@COD_VEICULO_TEM_CHECKLIST",MySqlDbType.Int16).Value = cod;
+                    MySqlDataReader leitor = comando.ExecuteReader();
+
+                    if (leitor.Read())
+                    {
+                        veiculochecklist.CodigoVeiculoTemCheckList = Int16.Parse(leitor["COD_VEICULO_TEM_CHECKLIST"].ToString());
+                        veiculochecklist.CodigoVeiculo = Int16.Parse(leitor["COD_VEICULO"].ToString());
+                        veiculochecklist.CodigoCheckList = Int16.Parse(leitor["COD_CHECKLIST"].ToString());
+                        veiculochecklist.DataChecagem = leitor["DATA_CHECAGEM"].ToString();
+                        veiculochecklist.Status = Int16.Parse(leitor["STATUS"].ToString());
+                    }
+
+                    return veiculochecklist;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
 
         public void Dispose()
         {
