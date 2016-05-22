@@ -145,7 +145,7 @@ namespace Persistencia.DAO
                     comando.CommandType = CommandType.Text;
                     comando.CommandText = "SELECT COD_VEICULO_TEM_FORNECEDOR, STATUS FROM VEICULO_TEM_FORNECEDOR WHERE STATUS <> 9 AND COD_VEICULO_TEM_FORNECEDOR = @COD_VEICULO_TEM_FORNECEDOR;";
 
-                    comando.Parameters.Add("@COD_VEICULO_TEM_FORNECEDOR",MySqlDbType.Int16).Value = cod;
+                    comando.Parameters.Add("@COD_VEICULO_TEM_FORNECEDOR",MySqlDbType.Int16).Value = veiculofornecedor.CodigoVeiculoTemFornecedor; 
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     if (leitor.Read())
@@ -174,5 +174,34 @@ namespace Persistencia.DAO
             GC.SuppressFinalize(this);
         }
 
+        bool IDAO<VeiculoTemFornecedor>.Inserir(VeiculoTemFornecedor model)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IDAO<VeiculoTemFornecedor>.Atualizar(VeiculoTemFornecedor model)
+        {
+            throw new NotImplementedException();
+        }
+
+        bool IDAO<VeiculoTemFornecedor>.Remover(VeiculoTemFornecedor model)
+        {
+            throw new NotImplementedException();
+        }
+
+        VeiculoTemFornecedor IDAO<VeiculoTemFornecedor>.Buscar(int cod)
+        {
+            throw new NotImplementedException();
+        }
+
+        List<VeiculoTemFornecedor> IDAO<VeiculoTemFornecedor>.Listar()
+        {
+            throw new NotImplementedException();
+        }
+
+        void IDisposable.Dispose()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
