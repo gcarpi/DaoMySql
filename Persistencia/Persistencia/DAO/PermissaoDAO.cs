@@ -27,7 +27,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO PERMISSAO(TIPO,NIVEL_PERMISSAO,DESCRICAO,STATUS) VALUES (@TIPO,@NIVEL_PERMISSAO,@DESCRICAO,@STATUS);";
+                    comando.CommandText = "INSERT INTO PERMISSAO(TIPO,NIVEL_PERMISSAO,DESCRICAO) VALUES (@TIPO,@NIVEL_PERMISSAO,@DESCRICAO);";
 
 
                     comando.Parameters.Add("@TIPO", MySqlDbType.Int16).Value = permissao.Tipo;

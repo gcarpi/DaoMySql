@@ -27,10 +27,9 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO NIVEL_PERMISSAO_USUARIO (NIVEL_PERMISSAO,STATUS,COD_USUARIO) VALUES (@NIVEL_PERMISSAO,@STATUS,@COD_USUARIO);";
+                    comando.CommandText = "INSERT INTO NIVEL_PERMISSAO_USUARIO (NIVEL_PERMISSAO,COD_USUARIO) VALUES (@NIVEL_PERMISSAO,@COD_USUARIO);";
 
                     comando.Parameters.Add("@NIVEL_PERMISSAO", MySqlDbType.Text).Value = nivel.NivelPermissao;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = nivel.Status;
                     comando.Parameters.Add("@COD_USUARIO", MySqlDbType.Int16).Value = nivel.CodigoUsuario;
 
                     if (comando.ExecuteNonQuery() > 0)
@@ -84,10 +83,10 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE NIVEL_PERMISSAO_USUARIO SET NIVEL_PERMISSAO = @NIVEL_PERMISSAO, STATUS = @STATUS, COD_USUARIO = @COD_USUARIO WHERE COD_NIVEL_PERMISSAO = @COD_NIVEL_PERMISSAO;";
+                    comando.CommandText = "UPDATE NIVEL_PERMISSAO_USUARIO SET NIVEL_PERMISSAO = @NIVEL_PERMISSAO WHERE COD_NIVEL_PERMISSAO = @COD_NIVEL_PERMISSAO;";
+
                     comando.Parameters.Add("@NIVEL_PERMISSAO", MySqlDbType.Text).Value = nivel.NivelPermissao;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = nivel.Status;
-                    comando.Parameters.Add("@COD_USUARIO", MySqlDbType.Int16).Value = nivel.CodigoUsuario;
+                    comando.Parameters.Add("@COD_NIVEL_PERMISSAO", MySqlDbType.Int16).Value = nivel.CodigoUsuario;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;
@@ -120,8 +119,8 @@ namespace Persistencia.DAO
                         NivelPermissaoUsuario nivel = new NivelPermissaoUsuario();
                         nivel.CodigoNivelPermissaoUsuario = Int16.Parse(leitor["COD_NIVEL_PERMISSAO"].ToString());
                         nivel.NivelPermissao = leitor["NIVEL_PERMISSAO"].ToString();
-                        nivel.Status = Int16.Parse(leitor["STATUS"].ToString());
                         nivel.CodigoUsuario = Int16.Parse(leitor["COD_USUARIO"].ToString());
+                        nivel.Status = Int16.Parse(leitor["STATUS"].ToString());
 
                         nivels.Add(nivel);
                     }
@@ -156,8 +155,8 @@ namespace Persistencia.DAO
                     {
                         nivel.CodigoNivelPermissaoUsuario = Int16.Parse(leitor["COD_NIVEL_PERMISSAO"].ToString());
                         nivel.NivelPermissao = leitor["NIVEL_PERMISSAO"].ToString();
-                        nivel.Status = Int16.Parse(leitor["STATUS"].ToString());
                         nivel.CodigoUsuario = Int16.Parse(leitor["COD_USUARIO"].ToString());
+                        nivel.Status = Int16.Parse(leitor["STATUS"].ToString());
                     }
 
                     return nivel;

@@ -27,10 +27,10 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO VEICULO_TEM_FORNECEDOR (COD_VEICULO,COD_FORNECEDOR,STATUS) VALUES (@COD_VEICULO,@COD_FORNECEDOR,@STATUS);";
+                    comando.CommandText = "INSERT INTO VEICULO_TEM_FORNECEDOR (COD_VEICULO,COD_FORNECEDOR) VALUES (@COD_VEICULO,@COD_FORNECEDOR);";
+
                     comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = veiculofornecedor.CodigoVeiculo;
                     comando.Parameters.Add("@COD_FORNECEDOR", MySqlDbType.Int16).Value = veiculofornecedor.CodigoFornecedor;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = veiculofornecedor.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -83,9 +83,10 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE VEICULO_TEM_FORNECEDOR SET STATUS = @STATUS WHERE COD_VEICULO_TEM_FORNECEDOR = @COD_VEICULO_TEM_FORNECEDOR;";
+                    comando.CommandText = "UPDATE VEICULO_TEM_FORNECEDOR SET COD_VEICULO = @COD_VEICULO, COD_FORNECEDOR = @COD_FORNECEDOR WHERE COD_VEICULO_TEM_FORNECEDOR = @COD_VEICULO_TEM_FORNECEDOR;";
 
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = veiculofornecedor.Status;
+                    comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = veiculofornecedor.CodigoVeiculo;
+                    comando.Parameters.Add("@COD_FORNECEDOR", MySqlDbType.Int16).Value = veiculofornecedor.CodigoFornecedor;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;
@@ -110,13 +111,15 @@ namespace Persistencia.DAO
                 {
                     List<VeiculoTemFornecedor> veiculofornecedors = new List<VeiculoTemFornecedor>();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_VEICULO_TEM_FORNECEDOR, STATUS FROM VEICULO_TEM_FORNECEDOR WHERE STATUS <> 9;";
+                    comando.CommandText = "SELECT COD_VEICULO_TEM_FORNECEDOR,COD_VEICULO,COD_FORNECEDOR,STATUS FROM VEICULO_TEM_FORNECEDOR WHERE STATUS <> 9;";
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     while (leitor.Read())
                     {
                         VeiculoTemFornecedor veiculofornecedor = new VeiculoTemFornecedor();
                         veiculofornecedor.CodigoVeiculoTemFornecedor = Int16.Parse(leitor["COD_VEICULO_TEM_FORNECEDOR"].ToString());
+                        veiculofornecedor.CodigoVeiculo = Int16.Parse(leitor["COD_VEICULO"].ToString());
+                        veiculofornecedor.CodigoVeiculo = Int16.Parse(leitor["COD_FORNECEDOR"].ToString());
                         veiculofornecedor.Status = Int16.Parse(leitor["STATUS"].ToString());
 
                         veiculofornecedors.Add(veiculofornecedor);
@@ -151,6 +154,8 @@ namespace Persistencia.DAO
                     if (leitor.Read())
                     {
                         veiculofornecedor.CodigoVeiculoTemFornecedor = Int16.Parse(leitor["COD_VEICULO_TEM_FORNECEDOR"].ToString());
+                        veiculofornecedor.CodigoVeiculo = Int16.Parse(leitor["COD_VEICULO"].ToString());
+                        veiculofornecedor.CodigoVeiculo = Int16.Parse(leitor["COD_FORNECEDOR"].ToString());
                         veiculofornecedor.Status = Int16.Parse(leitor["STATUS"].ToString());
                     }
 

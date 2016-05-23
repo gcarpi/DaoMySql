@@ -27,11 +27,10 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO ITEM_CONFORMIDADE (COD_CHECKLIST,ITEM,STATUS) VALUES (@COD_CHECKLIST,@ITEM,@STATUS);";
+                    comando.CommandText = "INSERT INTO ITEM_CONFORMIDADE (COD_CHECKLIST,ITEM) VALUES (@COD_CHECKLIST,@ITEM);";
 
                     comando.Parameters.Add("@COD_CHECKLIST", MySqlDbType.Int16).Value = item.CodigoCheckList;
                     comando.Parameters.Add("@ITEM", MySqlDbType.Text).Value = item.Item;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = item.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -83,7 +82,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE ITEM_CONFORMIDADE SET ITEM = @ITEM, STATUS = @STATUS WHERE COD_ITEM = @COD_ITEM;";
+                    comando.CommandText = "UPDATE ITEM_CONFORMIDADE SET ITEM = @ITEM WHERE COD_ITEM = @COD_ITEM;";
                     comando.Parameters.Add("@ITEM", MySqlDbType.Text).Value = item.Item;
                     comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = item.Status;
 

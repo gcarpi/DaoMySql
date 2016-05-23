@@ -15,15 +15,17 @@ namespace Persistencia.Modelo
             CodigoCheckList = cod_c;
         }
 
-        public CheckList(int cod_c, string observacao, int status)
+        public CheckList(int cod_c, string observacao, int status_checklist, int status)
         {
             CodigoCheckList = cod_c;
             Observacao = observacao;
+            Status_CheckList = status_checklist;
             Status = status;
         }
 
         public int CodigoCheckList { get; set; }
         public string Observacao { get; set; }
+        public int Status_CheckList { get; set; }
         public int Status { get; set; }
     }
 }

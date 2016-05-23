@@ -27,11 +27,10 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO TELEFONE_FORNECEDOR (TELEFONE,COD_FORNECEDOR,STATUS) VALUES (@TELEFONE,@COD_FORNECEDOR,@STATUS);";
+                    comando.CommandText = "INSERT INTO TELEFONE_FORNECEDOR (TELEFONE,COD_FORNECEDOR) VALUES (@TELEFONE,@COD_FORNECEDOR);";
 
                     comando.Parameters.Add("@TELEFONE", MySqlDbType.Text).Value = telefone.Telefone;
                     comando.Parameters.Add("@COD_FORNECEDOR", MySqlDbType.Int16).Value = telefone.CodigoFornecedor;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = telefone.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -84,9 +83,9 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE TELEFONE_FORNECEDOR SET TELEFONE = @TELEFONE, STATUS = @STATUS WHERE COD_TELFORNECEDOR = @COD_TELFORNECEDOR;";
+                    comando.CommandText = "UPDATE TELEFONE_FORNECEDOR SET TELEFONE = @TELEFONE WHERE COD_TELFORNECEDOR = @COD_TELFORNECEDOR;";
+
                     comando.Parameters.Add("@TELEFONE", MySqlDbType.Text).Value = telefone.Telefone;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = telefone.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;
@@ -111,13 +110,14 @@ namespace Persistencia.DAO
                 {
                     List<TelefoneFornecedor> telefones = new List<TelefoneFornecedor>();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_TELEFONE_FORNECEDOR, STATUS FROM TELEFONE_FORNECEDOR WHERE STATUS <> 9;";
+                    comando.CommandText = "SELECT COD_TELEFONE_FORNECEDOR,TELEFONE,STATUS FROM TELEFONE_FORNECEDOR WHERE STATUS <> 9;";
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     while (leitor.Read())
                     {
                         TelefoneFornecedor telefone = new TelefoneFornecedor();
                         telefone.CodigoTelefoneFornecedor = Int16.Parse(leitor["COD_TELEFONE_FORNECEDOR"].ToString());
+                        telefone.Telefone = leitor["TELEFONE"].ToString();
                         telefone.Status = Int16.Parse(leitor["STATUS"].ToString());
 
                         telefones.Add(telefone);
@@ -144,7 +144,7 @@ namespace Persistencia.DAO
                 {
                     TelefoneFornecedor telefone = new TelefoneFornecedor();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_TELEFONE_FORNECEDOR, STATUS FROM TELEFONE_FORNECEDOR WHERE STATUS <> 9 AND COD_TELEFONE_FORNECEDOR = @COD_TELEFONE_FORNECEDOR;";
+                    comando.CommandText = "SELECT COD_TELEFONE_FORNECEDOR,TELEFONE,STATUS FROM TELEFONE_FORNECEDOR WHERE STATUS <> 9 AND COD_TELEFONE_FORNECEDOR = @COD_TELEFONE_FORNECEDOR;";
 
                     comando.Parameters.Add("@COD_TELEFONE_FORNECEDOR",MySqlDbType.Int16).Value = cod;
                     MySqlDataReader leitor = comando.ExecuteReader();
@@ -152,6 +152,7 @@ namespace Persistencia.DAO
                     if (leitor.Read())
                     {
                         telefone.CodigoTelefoneFornecedor = Int16.Parse(leitor["COD_TELEFONE_FORNECEDOR"].ToString());
+                        telefone.Telefone = leitor["TELEFONE"].ToString();
                         telefone.Status = Int16.Parse(leitor["STATUS"].ToString());
                     }
 

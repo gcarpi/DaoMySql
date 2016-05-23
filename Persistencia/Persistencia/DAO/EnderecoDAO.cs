@@ -27,15 +27,13 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO ENDERECO (COD_ENDERECO,CEP,BAIRRO,NUMERO,CIDADE,ESTADO,STATUS,COD_FORNECEDOR,COD_CLIENTE) VALUES (@COD_ENDERECO,@CEP,@BAIRRO,@NUMERO,@CIDADE,@ESTADO,@STATUS,@COD_FORNECEDOR,@COD_CLIENTE);";
+                    comando.CommandText = "INSERT INTO ENDERECO (CEP,BAIRRO,NUMERO,CIDADE,ESTADO,COD_FORNECEDOR,COD_CLIENTE) VALUES (@CEP,@BAIRRO,@NUMERO,@CIDADE,@ESTADO,@COD_FORNECEDOR,@COD_CLIENTE);";
 
-                    comando.Parameters.Add("@COD_ENDERECO", MySqlDbType.Int16).Value = endereco.CodigoEndereco;
                     comando.Parameters.Add("@CEP", MySqlDbType.Text).Value = endereco.CEP;
                     comando.Parameters.Add("@BAIRRO", MySqlDbType.Text).Value = endereco.Bairro;
                     comando.Parameters.Add("@NUMERO", MySqlDbType.Int16).Value = endereco.Numero;
                     comando.Parameters.Add("@CIDADE", MySqlDbType.Text).Value = endereco.Cidade;
                     comando.Parameters.Add("@ESTADO", MySqlDbType.Text).Value = endereco.Estado;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = endereco.Status;
                     comando.Parameters.Add("@COD_FORNECEDOR", MySqlDbType.Int16).Value = endereco.CodigoEndereco;
                     comando.Parameters.Add("@COD_CLIENTE", MySqlDbType.Int16).Value = endereco.CodigoCliente;
 

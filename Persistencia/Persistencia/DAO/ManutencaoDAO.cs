@@ -27,11 +27,10 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO MANUTENCAO(TIPO_MANUTENCAO,OBSERVACAO,STATUS) VALUES (@TIPO_MANUTENCAO,@OBSERVACAO,@STATUS);";
+                    comando.CommandText = "INSERT INTO MANUTENCAO(TIPO_MANUTENCAO,OBSERVACAO) VALUES (@TIPO_MANUTENCAO,@OBSERVACAO);";
 
                     comando.Parameters.Add("@TIPO_MANUTENCAO", MySqlDbType.Int16).Value = manutencao.TipoManutencao;
                     comando.Parameters.Add("@OBSERVACAO", MySqlDbType.Text).Value = manutencao.Observacao;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = manutencao.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -86,6 +85,7 @@ namespace Persistencia.DAO
 
                     comando.Parameters.Add("@TIPO_MANUTENCAO", MySqlDbType.Int16).Value = manutencao.TipoManutencao;
                     comando.Parameters.Add("@OBSERVACAO", MySqlDbType.Text).Value = manutencao.Observacao;
+                    comando.Parameters.Add("@COD_MANUTENCAO", MySqlDbType.Int16).Value = manutencao.CodigoManutencao;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;

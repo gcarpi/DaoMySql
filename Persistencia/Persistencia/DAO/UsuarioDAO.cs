@@ -27,7 +27,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO USUARIO(NOME,RG,CPF,LOGIN,SENHA,COD_PERMISSAO,STATUS) VALUES (@NOME,@RG,@CPF,@LOGIN,@SENHA,@COD_PERMISSAO,@STATUS);";
+                    comando.CommandText = "INSERT INTO USUARIO(NOME,RG,CPF,LOGIN,SENHA,COD_PERMISSAO) VALUES (@NOME,@RG,@CPF,@LOGIN,@SENHA,@COD_PERMISSAO);";
 
                     comando.Parameters.Add("@NOME", MySqlDbType.Text).Value = user.Nome;
                     comando.Parameters.Add("@RG", MySqlDbType.Text).Value = user.RG;
@@ -35,7 +35,6 @@ namespace Persistencia.DAO
                     comando.Parameters.Add("@LOGIN", MySqlDbType.Text).Value = user.Login;
                     comando.Parameters.Add("@SENHA", MySqlDbType.Text).Value = user.Senha;
                     comando.Parameters.Add("@COD_PERMISSAO", MySqlDbType.Int16).Value = user.CodigoPermissao;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = user.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -116,7 +115,7 @@ namespace Persistencia.DAO
                 {
                     List<Usuario> users = new List<Usuario>();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_USUARIO,NOME,CPF,LOGIN,SENHA,STATUS FROM USUARIO WHERE STATUS <> 9;";
+                    comando.CommandText = "SELECT COD_USUARIO,NOME,CPF,LOGIN,SENHA,COD_PERMISSAO,STATUS FROM USUARIO WHERE STATUS <> 9;";
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     while(leitor.Read())
@@ -127,6 +126,7 @@ namespace Persistencia.DAO
                         user.CPF = leitor["CPF"].ToString();
                         user.Login = leitor["LOGIN"].ToString();
                         user.Senha = leitor["SENHA"].ToString();
+                        user.CodigoPermissao = Int16.Parse(leitor["COD_PERMISSAO"].ToString());
                         user.Status = Int16.Parse(leitor["STATUS"].ToString());
 
                         users.Add(user);
@@ -153,7 +153,7 @@ namespace Persistencia.DAO
                 {
                     Usuario user = new Usuario();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_USUARIO,NOME,CPF,LOGIN,SENHA,STATUS FROM USUARIO WHERE STATUS <> 9 AND COD_USUARIO = @COD_USUARIO;";
+                    comando.CommandText = "SELECT COD_USUARIO,NOME,CPF,LOGIN,SENHA,COD_PERMISSAO,STATUS FROM USUARIO WHERE STATUS <> 9 AND COD_USUARIO = @COD_USUARIO;";
 
                     comando.Parameters.Add("@COD_USUARIO",MySqlDbType.Int16).Value = cod;
                     MySqlDataReader leitor = comando.ExecuteReader();
@@ -165,6 +165,7 @@ namespace Persistencia.DAO
                         user.CPF = leitor["CPF"].ToString();
                         user.Login = leitor["LOGIN"].ToString();
                         user.Senha = leitor["SENHA"].ToString();
+                        user.CodigoPermissao = Int16.Parse(leitor["COD_PERMISSAO"].ToString());
                         user.Status = Int16.Parse(leitor["STATUS"].ToString());
                     }
                     return user;

@@ -27,10 +27,10 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO CHECKLIST(OBSERVACAO,STATUS) VALUES (@OBSERVACAO,@STATUS);";
+                    comando.CommandText = "INSERT INTO CHECKLIST(OBSERVACAO,STATUS_CHECKLIST) VALUES (@OBSERVACAO,@STATUS_CHECKLIST);";
 
                     comando.Parameters.Add("@OBSERVACAO", MySqlDbType.Text).Value = checklist.Observacao;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = checklist.Status;
+                    comando.Parameters.Add("@STATUS_CHECKLIST", MySqlDbType.Int16).Value = checklist.Status_CheckList;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -81,9 +81,10 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE CHECKLIST SET OBSERVACAO = @OBSERVACAO WHERE COD_CHECKLIST = @COD_CHECKLIST;";
+                    comando.CommandText = "UPDATE CHECKLIST SET OBSERVACAO = @OBSERVACAO, STATUS_CHECKLIST = @STATUS_CHECKLIST WHERE COD_CHECKLIST = @COD_CHECKLIST;";
 
                     comando.Parameters.Add("@OBSERVACAO", MySqlDbType.Text).Value = checklist.Observacao;
+                    comando.Parameters.Add("@STATUS_CHECKLIST", MySqlDbType.Int16).Value = checklist.Status_CheckList;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;
@@ -108,7 +109,7 @@ namespace Persistencia.DAO
                 {
                     List<CheckList> checklists = new List<CheckList>();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_CHECKLIST,OBSERVACAO,STATUS FROM CHECKLIST WHERE STATUS <> 9;";
+                    comando.CommandText = "SELECT COD_CHECKLIST,OBSERVACAO,STATUS_CHECKLIST,STATUS FROM CHECKLIST WHERE STATUS <> 9;";
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     while (leitor.Read())
@@ -116,6 +117,7 @@ namespace Persistencia.DAO
                         CheckList checklist = new CheckList();
                         checklist.CodigoCheckList = Int16.Parse(leitor["COD_CHECKLIST"].ToString());
                         checklist.Observacao= leitor["OBSERVACAO"].ToString();
+                        checklist.Status_CheckList = Int16.Parse(leitor["STATUS_CHECKLIST"].ToString());
                         checklist.Status = Int16.Parse(leitor["STATUS"].ToString());
 
                         checklists.Add(checklist);
@@ -142,7 +144,7 @@ namespace Persistencia.DAO
                 {
                     CheckList checklist = new CheckList();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_CHECKLIST,OBSERVACAO,STATUS FROM CHECKLIST WHERE STATUS <> 9 AND COD_CHECKLIST = @COD_CHECKLIST;";
+                    comando.CommandText = "SELECT COD_CHECKLIST,OBSERVACAO,STATUS_CHECKLIST,STATUS FROM CHECKLIST WHERE STATUS <> 9 AND COD_CHECKLIST = @COD_CHECKLIST;";
 
                     comando.Parameters.Add("@COD_CHECKLIST",MySqlDbType.Int16).Value = cod;
                     MySqlDataReader leitor = comando.ExecuteReader();
@@ -151,6 +153,7 @@ namespace Persistencia.DAO
                     {
                         checklist.CodigoCheckList = Int16.Parse(leitor["COD_CHECKLIST"].ToString());
                         checklist.Observacao = leitor["OBSERVACAO"].ToString();
+                        checklist.Status_CheckList = Int16.Parse(leitor["STATUS_CHECKLIST"].ToString());
                         checklist.Status = Int16.Parse(leitor["STATUS"].ToString());
                     }
 

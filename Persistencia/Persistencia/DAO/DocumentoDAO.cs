@@ -27,13 +27,12 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO DOCUMENTO(RENAVAM,CHASSI,DATA_LICENCIAMENTO,COD_VEICULO, STATUS) VALUES (@RENAVAM,@CHASSI,@DATA_LICENCIAMENTO,@COD_VEICULO, @STATUS);";
+                    comando.CommandText = "INSERT INTO DOCUMENTO(RENAVAM,CHASSI,DATA_LICENCIAMENTO,COD_VEICULO) VALUES (@RENAVAM,@CHASSI,@DATA_LICENCIAMENTO,@COD_VEICULO);";
 
                     comando.Parameters.Add("@DATA_RESERVA", MySqlDbType.Text).Value = documento.Renavam;
                     comando.Parameters.Add("@CHASSI", MySqlDbType.Text).Value = documento.Chassi;
                     comando.Parameters.Add("@DATA_LICENCIAMENTO", MySqlDbType.Text).Value = documento.DataLicenciamento;
                     comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Text).Value = documento.CodigoVeiculo;
-                    comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = documento.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -84,14 +83,12 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE DOCUMENTO SET RENAVAM = @RENAVAM, CHASSI = @CHASSI, DATA_LICENCIAMENTO = @DATA_LICENCIAMENTO, COD_VEICULO = @COD_VEICULO, STATUS = @STATUS WHERE COD_DOCUMENTO = @COD_DOCUMENTO";
+                    comando.CommandText = "UPDATE DOCUMENTO SET RENAVAM = @RENAVAM, CHASSI = @CHASSI, DATA_LICENCIAMENTO = @DATA_LICENCIAMENTO WHERE COD_DOCUMENTO = @COD_DOCUMENTO";
 
                     comando.Parameters.Add("@RENAVAM", MySqlDbType.Text).Value = documento.Renavam;
                     comando.Parameters.Add("@CHASSI", MySqlDbType.Text).Value = documento.Chassi;
                     comando.Parameters.Add("@DATA_LICENCIAMENTO", MySqlDbType.Text).Value = documento.DataLicenciamento;
-                    comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = documento.CodigoVeiculo;
-                    comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = documento.CodigoVeiculo;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = documento.Status;
+                    comando.Parameters.Add("@COD_DOCUMENTO", MySqlDbType.Int16).Value = documento.CodigoDocumento;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;

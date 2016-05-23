@@ -27,7 +27,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO PESSOA_FISICA (NOME,RG,CPF,DATA_NASCIMENTO,CNH,PASSAPORTE,NATURALIDADE,STATUS) VALUES (@NOME,@RG,@CPF,@DATA_NASCIMENTO,@CNH,@PASSAPORTE,@NATURALIDADE,@STATUS);";
+                    comando.CommandText = "INSERT INTO PESSOA_FISICA (NOME,RG,CPF,DATA_NASCIMENTO,CNH,PASSAPORTE,NATURALIDADE,COD_CLIENTE) VALUES (@NOME,@RG,@CPF,@DATA_NASCIMENTO,@CNH,@PASSAPORTE,@NATURALIDADE,@COD_CLIENTE);";
 
                     comando.Parameters.Add("@NOME", MySqlDbType.Text).Value = pessoa.Nome;
                     comando.Parameters.Add("@RG", MySqlDbType.Text).Value = pessoa.RG;
@@ -35,7 +35,7 @@ namespace Persistencia.DAO
                     comando.Parameters.Add("@CNH", MySqlDbType.Text).Value = pessoa.CNH;
                     comando.Parameters.Add("@PASSAPORTE", MySqlDbType.Text).Value = pessoa.Passaporte;
                     comando.Parameters.Add("@NATURALIDADE", MySqlDbType.Text).Value = pessoa.Naturalidade;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = pessoa.Status;
+                    comando.Parameters.Add("@COD_CLIENTE", MySqlDbType.Int16).Value = pessoa.CodigoCliente;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -95,7 +95,6 @@ namespace Persistencia.DAO
                     comando.Parameters.Add("@CNH", MySqlDbType.Text).Value = pessoa.CNH;
                     comando.Parameters.Add("@PASSAPORTE", MySqlDbType.Text).Value = pessoa.Passaporte;
                     comando.Parameters.Add("@NATURALIDADE", MySqlDbType.Text).Value = pessoa.Naturalidade;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = pessoa.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;
@@ -120,7 +119,7 @@ namespace Persistencia.DAO
                 {
                     List<PessoaFisica> pessoas = new List<PessoaFisica>();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_PESSOA_FISICA,NOME,RG,CPF,DATA_NASCIMENTO,CNH,PASSAPORTE,NATURALIDADE,STATUS FROM PESSOA_FISICA WHERE STATUS <> 9;";
+                    comando.CommandText = "SELECT COD_PESSOA_FISICA,NOME,RG,CPF,DATA_NASCIMENTO,CNH,PASSAPORTE,NATURALIDADE,COD_CLIENTE,STATUS FROM PESSOA_FISICA WHERE STATUS <> 9;";
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     while (leitor.Read())
@@ -134,6 +133,7 @@ namespace Persistencia.DAO
                         pessoa.CNH = leitor["CNH"].ToString();
                         pessoa.Passaporte = leitor["PASSAPORTE"].ToString();
                         pessoa.CNH = leitor["NATURALIDADE"].ToString();
+                        pessoa.CodigoCliente = Int16.Parse(leitor["COD_CLIENTE"].ToString());
                         pessoa.Status = Int16.Parse(leitor["STATUS"].ToString());
 
                         pessoas.Add(pessoa);
@@ -160,7 +160,7 @@ namespace Persistencia.DAO
                 {
                     PessoaFisica pessoa = new PessoaFisica();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_PESSOA_FISICA,NOME,RG,CPF,DATA_NASCIMENTO,CNH,PASSAPORTE,NATURALIDADE,STATUS FROM PESSOA_FISICA WHERE STATUS <> 9 AND COD_PESSOA_FISICA = @COD_PESSOA_FISICA;";
+                    comando.CommandText = "SELECT COD_PESSOA_FISICA,NOME,RG,CPF,DATA_NASCIMENTO,CNH,PASSAPORTE,NATURALIDADE,COD_CLIENTE,STATUS FROM PESSOA_FISICA WHERE STATUS <> 9 AND COD_PESSOA_FISICA = @COD_PESSOA_FISICA;";
 
                     comando.Parameters.Add("@COD_PESSOA_FISICA", MySqlDbType.Int16).Value = cod;
                     MySqlDataReader leitor = comando.ExecuteReader();
@@ -175,6 +175,7 @@ namespace Persistencia.DAO
                         pessoa.CNH = leitor["CNH"].ToString();
                         pessoa.Passaporte = leitor["PASSAPORTE"].ToString();
                         pessoa.CNH = leitor["NATURALIDADE"].ToString();
+                        pessoa.CodigoCliente = Int16.Parse(leitor["COD_CLIENTE"].ToString());
                         pessoa.Status = Int16.Parse(leitor["STATUS"].ToString());
                     }
 

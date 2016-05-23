@@ -27,11 +27,10 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO CATEGORIA(NOME,VALOR,STATUS) VALUES (@NOME,@VALOR,@STATUS);";
+                    comando.CommandText = "INSERT INTO CATEGORIA(NOME,VALOR) VALUES (@NOME,@VALOR);";
 
                     comando.Parameters.Add("@NOME", MySqlDbType.Text).Value = categoria.Nome;
                     comando.Parameters.Add("@VALOR", MySqlDbType.Decimal).Value = categoria.Valor;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = categoria.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -83,11 +82,11 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE CATEGORIA SET NOME = @NOME, VALOR = @VALOR, STATUS = @STATUS WHERE COD_CATEGORIA = @COD_CATEGORIA;";
+                    comando.CommandText = "UPDATE CATEGORIA SET NOME = @NOME, VALOR = @VALOR WHERE COD_CATEGORIA = @COD_CATEGORIA;";
 
                     comando.Parameters.Add("@NOME", MySqlDbType.Text).Value = categoria.Nome;
                     comando.Parameters.Add("@VALOR", MySqlDbType.Decimal).Value = categoria.Valor;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = categoria.Status;
+                    comando.Parameters.Add("@COD_CATEGORIA", MySqlDbType.Int16).Value = categoria.CodigoCategoria;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;

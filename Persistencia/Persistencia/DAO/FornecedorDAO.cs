@@ -27,11 +27,10 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO FORNECEDOR(COD_FORNECEDOR,COD_PESSOA_JURIDICA,STATUS) VALUES (@COD_FORNECEDOR,@COD_PESSOA_JURIDICA,STATUS);";
+                    comando.CommandText = "INSERT INTO FORNECEDOR(COD_FORNECEDOR,COD_PESSOA_JURIDICA) VALUES (@COD_FORNECEDOR,@COD_PESSOA_JURIDICA);";
 
                     comando.Parameters.Add("@COD_FORNECEDOR", MySqlDbType.Int16).Value = fornecedor.CodigoFornecedor;
                     comando.Parameters.Add("@COD_PESSOA_JURIDICA", MySqlDbType.Int16).Value = fornecedor.CodigoPessoaJuridica;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = fornecedor.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -82,11 +81,10 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE FORNECEDOR SET COD_FORNECEDOR = @COD_FORNECEDOR, COD_PESSOA_JURIDICA = @COD_PESSOA_JURIDICA, STATUS = @STATUS WHERE COD_FORNECEDOR = @COD_FORNECEDOR";
+                    comando.CommandText = "UPDATE FORNECEDOR SET COD_PESSOA_JURIDICA = @COD_PESSOA_JURIDICA WHERE COD_FORNECEDOR = @COD_FORNECEDOR";
 
                     comando.Parameters.Add("@COD_FORNECEDOR", MySqlDbType.Int16).Value = fornecedor.CodigoFornecedor;
                     comando.Parameters.Add("@COD_PESSOA_JURIDICA", MySqlDbType.Int16).Value = fornecedor.CodigoPessoaJuridica;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = fornecedor.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;

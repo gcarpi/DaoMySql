@@ -27,10 +27,9 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO CLIENTE(EMAIL,STATUS) VALUES (@EMAIL,@STATUS);";
+                    comando.CommandText = "INSERT INTO CLIENTE(EMAIL) VALUES (@EMAIL);";
 
                     comando.Parameters.Add("@EMAIL", MySqlDbType.Text).Value = cliente.Email;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = cliente.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -143,6 +142,7 @@ namespace Persistencia.DAO
                     Cliente cliente = new Cliente();
                     comando.CommandType = CommandType.Text;
                     comando.CommandText = "SELECT COD_CLIENTE,EMAIL,STATUS FROM CLIENTE WHERE STATUS <> 9 AND COD_CLIENTE = @COD_CLIENTE;";
+
                     comando.Parameters.Add("@COD_CLIENTE", MySqlDbType.Int16).Value = cod;
                     MySqlDataReader leitor = comando.ExecuteReader();
 

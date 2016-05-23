@@ -27,7 +27,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO VEICULO(MARCA,MODELO,ANO_DE_FABRICACAO,CONDICAO,VIDRO_ELETRICO,TRAVA_ELETRICA,AUTOMATICO,QUANTIDADE_PORTAS,DIRECAO_HIDRAULICA,COR,AR_CONDICIONADO,STATUS,COD_CATEGORIA) VALUES (@MARCA,@MODELO,@ANO_DE_FABRICACAO,@CONDICAO,@VIDRO_ELETRICO,@TRAVA_ELETRICA,@AUTOMATICO,@QUANTIDADE_PORTAS,@DIRECAO_HIDRAULICA,@COR,@AR_CONDICIONADO,@COD_CATEGORIA,@STATUS);";
+                    comando.CommandText = "INSERT INTO VEICULO(MARCA,MODELO,ANO_DE_FABRICACAO,CONDICAO,VIDRO_ELETRICO,TRAVA_ELETRICA,AUTOMATICO,QUANTIDADE_PORTAS,DIRECAO_HIDRAULICA,COR,AR_CONDICIONADO,COD_CATEGORIA) VALUES (@MARCA,@MODELO,@ANO_DE_FABRICACAO,@CONDICAO,@VIDRO_ELETRICO,@TRAVA_ELETRICA,@AUTOMATICO,@QUANTIDADE_PORTAS,@DIRECAO_HIDRAULICA,@COR,@AR_CONDICIONADO,@COD_CATEGORIA);";
 
                     comando.Parameters.Add("@MARCA",MySqlDbType.Text).Value = veiculo.Marca;
                     comando.Parameters.Add("@MODELO",MySqlDbType.Text).Value = veiculo.Modelo;
@@ -40,7 +40,6 @@ namespace Persistencia.DAO
                     comando.Parameters.Add("@DIRECAO_HIDRAULICA", MySqlDbType.Bit).Value = veiculo.DirecaoHidraulica;
                     comando.Parameters.Add("@COR", MySqlDbType.Text).Value = veiculo.Cor;
                     comando.Parameters.Add("@AR_CONDICIONADO", MySqlDbType.Bit).Value = veiculo.ArCondicionado;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = veiculo.Status;
                     comando.Parameters.Add("@COD_CATEGORIA", MySqlDbType.Int16).Value = veiculo.CodigoCategoria;
 
                     if (comando.ExecuteNonQuery() > 0)
@@ -92,8 +91,9 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE USUARIO SET MARCA = @MARCA, MODELO = @MODELO, ANO_DE_FABRICACAO = @ANO_DE_FABRICACAO, CONDICAO = @CONDICAO, VIDRO_ELETRICO = @VIDRO_ELETRICO, TRAVA_ELETRICA = @TRAVA_ELETRICA, AUTOMATICO = @AUTOMATICO, QUANTIDADE_PORTAS = @QUANTIDADE_PORTAS, DIRECAO_HIDRAULICA = @DIRECAO_HIDRAULICA, COR = @COR, AR_CONDICIONADO = @AR_CONDICIONADO, COD_CATEGORIA = @COD_CATEGORIA, STATUS = @STATUS WHERE COD_VEICULO = @COD_VEICULO;";
+                    comando.CommandText = "UPDATE USUARIO SET MARCA = @MARCA, MODELO = @MODELO, ANO_DE_FABRICACAO = @ANO_DE_FABRICACAO, CONDICAO = @CONDICAO, VIDRO_ELETRICO = @VIDRO_ELETRICO, TRAVA_ELETRICA = @TRAVA_ELETRICA, AUTOMATICO = @AUTOMATICO, QUANTIDADE_PORTAS = @QUANTIDADE_PORTAS, DIRECAO_HIDRAULICA = @DIRECAO_HIDRAULICA, COR = @COR, AR_CONDICIONADO = @AR_CONDICIONADO, COD_CATEGORIA = @COD_CATEGORIA WHERE COD_VEICULO = @COD_VEICULO;";
 
+                    comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = veiculo.CodigoVeiculo;
                     comando.Parameters.Add("@MARCA", MySqlDbType.Text).Value = veiculo.Marca;
                     comando.Parameters.Add("@MODELO", MySqlDbType.Text).Value = veiculo.Modelo;
                     comando.Parameters.Add("@ANO_DE_FABRICACAO", MySqlDbType.Date).Value = veiculo.AnoFabricação;
@@ -106,7 +106,6 @@ namespace Persistencia.DAO
                     comando.Parameters.Add("@COR", MySqlDbType.Text).Value = veiculo.Cor;
                     comando.Parameters.Add("@AR_CONDICIONADO", MySqlDbType.Bit).Value = veiculo.ArCondicionado;
                     comando.Parameters.Add("@COD_CATEGORIA", MySqlDbType.Int16).Value = veiculo.CodigoCategoria;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = veiculo.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;

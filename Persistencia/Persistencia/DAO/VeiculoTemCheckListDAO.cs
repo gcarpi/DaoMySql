@@ -27,11 +27,11 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO VEICULO_TEM_MANUTENCAO(COD_VEICULO,COD_CHECKLIST, DATA_CHECAGEM,STATUS) VALUES (@COD_VEICULO,@COD_CHECKLIST,@DATA_CHECAGEM,@STATUS);";
+                    comando.CommandText = "INSERT INTO VEICULO_TEM_MANUTENCAO(COD_VEICULO,COD_CHECKLIST,DATA_CHECAGEM) VALUES (@COD_VEICULO,@COD_CHECKLIST,@DATA_CHECAGEM);";
+
                     comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = veiculochecklist.CodigoVeiculo;
                     comando.Parameters.Add("@COD_CHECKLIST", MySqlDbType.Int16).Value = veiculochecklist.CodigoCheckList;
                     comando.Parameters.Add("@DATA_CHECAGEM", MySqlDbType.Text).Value = veiculochecklist.DataChecagem;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = veiculochecklist.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -84,11 +84,11 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE SET COD_VEICULO = @COD_VEICULO, COD_CHECKLIST = @COD_CHECKLIST, DATA_CHECAGEM = @DATA_CHECAGEM, STATUS = @STATUS WHERE COD_VEICULO_TEM_MANUTENCAO = @COD_VEICULO_TEM_MANUTENCAO;";
+                    comando.CommandText = "UPDATE SET COD_VEICULO = @COD_VEICULO, COD_CHECKLIST = @COD_CHECKLIST, DATA_CHECAGEM = @DATA_CHECAGEM WHERE COD_VEICULO_TEM_MANUTENCAO = @COD_VEICULO_TEM_MANUTENCAO;";
+
                     comando.Parameters.Add("@COD_VEICULO ", MySqlDbType.Int16).Value = veiculochecklist.CodigoVeiculo;
                     comando.Parameters.Add("@COD_CHECKLIST", MySqlDbType.Text).Value = veiculochecklist.CodigoCheckList;
                     comando.Parameters.Add("@DATA_CHECAGEM", MySqlDbType.Text).Value = veiculochecklist.DataChecagem;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = veiculochecklist.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;

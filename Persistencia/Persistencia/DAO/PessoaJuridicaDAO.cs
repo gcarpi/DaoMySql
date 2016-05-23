@@ -27,13 +27,14 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO PESSOA_JURIDICA (INSCRICAO_ESTADUAL,RAZAO_SOCIAL,CNPJ,NOME_FANTASIA,STATUS) VALUES (@INSCRICAO_ESTADUAL,@RAZAO_SOCIAL,@CNPJ,@NOME_FANTASIA,@STATUS);";
+                    comando.CommandText = "INSERT INTO PESSOA_JURIDICA (INSCRICAO_ESTADUAL,RAZAO_SOCIAL,CNPJ,NOME_FANTASIA,COD_CLIENTE,COD_FORNECEDOR) VALUES (@INSCRICAO_ESTADUAL,@RAZAO_SOCIAL,@CNPJ,@NOME_FANTASIA,@COD_CLIENTE,@COD_FORNECEDOR);";
 
                     comando.Parameters.Add("@INSCRICAO_ESTADUAL", MySqlDbType.Text).Value = pessoa.InscricaoEstadual;
                     comando.Parameters.Add("@RAZAO_SOCIAL", MySqlDbType.Text).Value = pessoa.RazaoSocial;
                     comando.Parameters.Add("@CNPJ", MySqlDbType.Int16).Value = pessoa.CNPJ;
                     comando.Parameters.Add("@NOME_FANTASIA", MySqlDbType.Text).Value = pessoa.NomeFantasia;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = pessoa.Status;
+                    comando.Parameters.Add("@COD_CLIENTE", MySqlDbType.Int16).Value = pessoa.CodigoCliente;
+                    comando.Parameters.Add("@COD_FORNECEDOR", MySqlDbType.Int16).Value = pessoa.CodigoFornecedor;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -90,7 +91,6 @@ namespace Persistencia.DAO
                     comando.Parameters.Add("@RAZAO_SOCIAL", MySqlDbType.Text).Value = pessoa.RazaoSocial;
                     comando.Parameters.Add("@CNPJ", MySqlDbType.Int16).Value = pessoa.CNPJ;
                     comando.Parameters.Add("@NOME_FANTASIA", MySqlDbType.Text).Value = pessoa.NomeFantasia;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = pessoa.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;
@@ -115,7 +115,7 @@ namespace Persistencia.DAO
                 {
                     List<PessoaJuridica> pessoas = new List<PessoaJuridica>();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_PESSOA_JURIDICA,INSCRICAO_ESTADUAL,RAZAO_SOCIAL,CNPJ,NOME_FANTASIA,STATUS FROM PESSOA_JURIDICA WHERE STATUS <> 9;";
+                    comando.CommandText = "SELECT COD_PESSOA_JURIDICA,INSCRICAO_ESTADUAL,RAZAO_SOCIAL,CNPJ,NOME_FANTASIA,COD_CLIENTE,COD_FORNECEDOR,STATUS FROM PESSOA_JURIDICA WHERE STATUS <> 9;";
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     while (leitor.Read())
@@ -126,6 +126,8 @@ namespace Persistencia.DAO
                         pessoa.RazaoSocial = leitor["RAZAO_SOCIAL"].ToString();
                         pessoa.CNPJ = leitor["CNPJ"].ToString();
                         pessoa.NomeFantasia = leitor["NOME_FANTASIA"].ToString();
+                        pessoa.CodigoCliente = Int16.Parse(leitor["COD_CLIENTE"].ToString());
+                        pessoa.CodigoFornecedor = Int16.Parse(leitor["COD_FORNECEDOR"].ToString());
                         pessoa.Status = Int16.Parse(leitor["STATUS"].ToString());
 
                         pessoas.Add(pessoa);
@@ -152,7 +154,7 @@ namespace Persistencia.DAO
                 {
                     PessoaJuridica pessoa = new PessoaJuridica();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_PESSOA_JURIDICA,INSCRICAO_ESTADUAL,RAZAO_SOCIAL,CNPJ,NOME_FANTASIA,STATUS FROM PESSOA_JURIDICA WHERE STATUS <> 9 AND COD_PESSOA_JURIDICA = @COD_PESSOA_JURIDICA;";
+                    comando.CommandText = "SELECT COD_PESSOA_JURIDICA,INSCRICAO_ESTADUAL,RAZAO_SOCIAL,CNPJ,NOME_FANTASIA,COD_CLIENTE,COD_FORNECEDOR,STATUS FROM PESSOA_JURIDICA WHERE STATUS <> 9 AND COD_PESSOA_JURIDICA = @COD_PESSOA_JURIDICA;";
 
                     comando.Parameters.Add("@COD_PESSOA_JURIDICA",MySqlDbType.Int16).Value = cod;
                     MySqlDataReader leitor = comando.ExecuteReader();
@@ -164,6 +166,8 @@ namespace Persistencia.DAO
                         pessoa.RazaoSocial = leitor["RAZAO_SOCIAL"].ToString();
                         pessoa.CNPJ = leitor["CNPJ"].ToString();
                         pessoa.NomeFantasia = leitor["NOME_FANTASIA"].ToString();
+                        pessoa.CodigoCliente = Int16.Parse(leitor["COD_CLIENTE"].ToString());
+                        pessoa.CodigoFornecedor = Int16.Parse(leitor["COD_FORNECEDOR"].ToString());
                         pessoa.Status = Int16.Parse(leitor["STATUS"].ToString());
                     }
 

@@ -27,13 +27,13 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO VEICULO_TEM_MANUTENCAO(COD_VEICULO,COD_MANUTENCAO,DATA_PREVISTA,DATA_ENTREGA,DATA_SAIDA,STATUS) VALUES (@COD_VEICULO,@COD_MANUTENCAO,@DATA_PREVISTA,@DATA_ENTREGA,@DATA_SAIDA,@STATUS);";
-                    comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = veiculomanutencao.CodigoVeiculo;
-                    comando.Parameters.Add("@COD_MANUTENCAO", MySqlDbType.Int16).Value = veiculomanutencao.CodigoManutencao;
+                    comando.CommandText = "INSERT INTO VEICULO_TEM_MANUTENCAO(DATA_PREVISTA,DATA_ENTREGA,DATA_SAIDA,COD_VEICULO,COD_MANUTENCAO) VALUES (@DATA_PREVISTA,@DATA_ENTREGA,@DATA_SAIDA,@COD_VEICULO,@COD_MANUTENCAO);";
+
                     comando.Parameters.Add("@DATA_PREVISTA", MySqlDbType.Text).Value = veiculomanutencao.DataPrevista;
                     comando.Parameters.Add("@DATA_ENTREGA", MySqlDbType.Text).Value = veiculomanutencao.DataEntrega;
                     comando.Parameters.Add("@DATA_SAIDA", MySqlDbType.Text).Value = veiculomanutencao.DataSaida;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = veiculomanutencao.Status;
+                    comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = veiculomanutencao.CodigoVeiculo;
+                    comando.Parameters.Add("@COD_MANUTENCAO", MySqlDbType.Int16).Value = veiculomanutencao.CodigoManutencao;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -86,11 +86,12 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE VEICULO_TEM_MANUTENCAO SET DATA_PREVISTA = @DATA_PREVISTA, DATA_ENTREGA = @DATA_ENTREGA, DATA_SAIDA = @DATA_SAIDA ,STATUS = @STATUS WHERE COD_VEICULO_TEM_MANUTENCAO = @COD_VEICULO_TEM_MANUTENCAO;";
+                    comando.CommandText = "UPDATE VEICULO_TEM_MANUTENCAO SET DATA_PREVISTA = @DATA_PREVISTA, DATA_ENTREGA = @DATA_ENTREGA, DATA_SAIDA = @DATA_SAIDA WHERE COD_VEICULO_TEM_MANUTENCAO = @COD_VEICULO_TEM_MANUTENCAO;";
+
+                    comando.Parameters.Add("@COD_VEICULO_TEM_MANUTENCAO", MySqlDbType.Int16).Value = veiculomanutencao.CodigoVeiculoTemManutencao;
                     comando.Parameters.Add("@DATA_PREVISTA", MySqlDbType.Text).Value = veiculomanutencao.DataPrevista;
                     comando.Parameters.Add("@DATA_ENTREGA", MySqlDbType.Text).Value = veiculomanutencao.DataEntrega;
                     comando.Parameters.Add("@DATA_SAIDA", MySqlDbType.Text).Value = veiculomanutencao.DataSaida;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = veiculomanutencao.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;
@@ -115,7 +116,7 @@ namespace Persistencia.DAO
                 {
                     List<VeiculoTemManutencao> veiculomanutencaos = new List<VeiculoTemManutencao>();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_VEICULO_TEM_MANUTENCAO,DATA_PREVISTA,DATA_ENTREGA,DATA_SAIDA,STATUS FROM VEICULO_TEM_MANUTENCAO WHERE STATUS <> 9;";
+                    comando.CommandText = "SELECT COD_VEICULO_TEM_MANUTENCAO,DATA_PREVISTA,DATA_ENTREGA,DATA_SAIDA,COD_VEICULO,COD_MANUTENCAO,STATUS FROM VEICULO_TEM_MANUTENCAO WHERE STATUS <> 9;";
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     while (leitor.Read())
@@ -125,6 +126,8 @@ namespace Persistencia.DAO
                         veiculomanutencao.DataPrevista = leitor["DATA_PREVISTA"].ToString();
                         veiculomanutencao.DataEntrega = leitor["DATA_ENTREGA"].ToString();
                         veiculomanutencao.DataSaida = leitor["DATA_SAIDA"].ToString();
+                        veiculomanutencao.CodigoVeiculo = Int16.Parse(leitor["COD_VEICULO"].ToString());
+                        veiculomanutencao.CodigoManutencao = Int16.Parse(leitor["COD_MANUTENCAO"].ToString());
                         veiculomanutencao.Status = Int16.Parse(leitor["STATUS"].ToString());
 
                         veiculomanutencaos.Add(veiculomanutencao);
@@ -151,7 +154,7 @@ namespace Persistencia.DAO
                 {
                     VeiculoTemManutencao veiculomanutencao = new VeiculoTemManutencao();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_VEICULO_TEM_MANUTENCAO,DATA_PREVISTA,DATA_ENTREGA,DATA_SAIDA,STATUS FROM VEICULO_TEM_MANUTENCAO WHERE STATUS <> 9 AND COD_VEICULO_TEM_MANUTENCAO = @COD_VEICULO_TEM_MANUTENCAO;";
+                    comando.CommandText = "SELECT COD_VEICULO_TEM_MANUTENCAO,DATA_PREVISTA,DATA_ENTREGA,DATA_SAIDA,COD_VEICULO,COD_MANUTENCAO,STATUS FROM VEICULO_TEM_MANUTENCAO WHERE STATUS <> 9 AND COD_VEICULO_TEM_MANUTENCAO = @COD_VEICULO_TEM_MANUTENCAO;";
 
                     comando.Parameters.Add("@COD_VEICULO_TEM_MANUTENCAO",MySqlDbType.Int16).Value = cod;
                     MySqlDataReader leitor = comando.ExecuteReader();
@@ -162,6 +165,8 @@ namespace Persistencia.DAO
                         veiculomanutencao.DataPrevista = leitor["DATA_PREVISTA"].ToString();
                         veiculomanutencao.DataEntrega = leitor["DATA_ENTREGA"].ToString();
                         veiculomanutencao.DataSaida = leitor["DATA_SAIDA"].ToString();
+                        veiculomanutencao.CodigoVeiculo = Int16.Parse(leitor["COD_VEICULO"].ToString());
+                        veiculomanutencao.CodigoManutencao = Int16.Parse(leitor["COD_MANUTENCAO"].ToString());
                         veiculomanutencao.Status = Int16.Parse(leitor["STATUS"].ToString());
                     }
 
