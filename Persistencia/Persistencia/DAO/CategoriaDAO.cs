@@ -179,7 +179,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COUNT(COD_CATEGORIA) FROM CATEGORIA;";
+                    comando.CommandText = "SELECT COUNT(COD_CATEGORIA) FROM CATEGORIA WHERE STATUS <> 9;";
 
                     return (long)comando.ExecuteScalar();
                 }
