@@ -190,7 +190,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COUNT(COD_DOCUMENTO) FROM DOCUMENTO;";
+                    comando.CommandText = "SELECT COUNT(COD_DOCUMENTO) FROM DOCUMENTO WHERE STATUS <> 9;";
 
                     return (long)comando.ExecuteScalar();
                 }
