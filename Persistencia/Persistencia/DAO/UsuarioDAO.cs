@@ -85,12 +85,14 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE USUARIO SET NOME = @NOME, CPF = @CPF, LOGIN = @LOGIN, SENHA = @SENHA WHERE COD_USUARIO = @COD_USUARIO;";
+                    comando.CommandText = "UPDATE USUARIO SET NOME = @NOME, CPF = @CPF, LOGIN = @LOGIN, SENHA = @SENHA, COD_PERMISSAO = @COD_PERMISSAO WHERE COD_USUARIO = @COD_USUARIO;";
 
+                    comando.Parameters.Add("@COD_USUARIO", MySqlDbType.Int16).Value = user.CodigoUsuario;
                     comando.Parameters.Add("@NOME", MySqlDbType.Text).Value = user.Nome;
                     comando.Parameters.Add("@CPF", MySqlDbType.Text).Value = user.CPF;
                     comando.Parameters.Add("@LOGIN", MySqlDbType.Text).Value = user.Login;
                     comando.Parameters.Add("@SENHA", MySqlDbType.Text).Value = user.Senha;
+                    comando.Parameters.Add("@COD_PERMISSAO", MySqlDbType.Int16).Value = user.CodigoPermissao;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;
@@ -145,7 +147,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public Usuario Buscar(int cod)
+        public Usuario Buscar(long cod)
         {
             try
             {
@@ -169,6 +171,28 @@ namespace Persistencia.DAO
                         user.Status = Int16.Parse(leitor["STATUS"].ToString());
                     }
                     return user;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+        public long Contagem()
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COUNT(COD_USUARIO) FROM USUARIO;";
+
+                    return (long)comando.ExecuteScalar();
                 }
             }
             catch (MySqlException)

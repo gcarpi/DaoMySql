@@ -54,7 +54,7 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE NIVEL_PERMISSAO_USUARIO SET STATUS = @STATUS WHERE COD_NIVEL_PERMISSAO = @COD_NIVEL_PERMISSAO";
+                    comando.CommandText = "UPDATE NIVEL_PERMISSAO_USUARIO SET STATUS = @STATUS WHERE COD_NIVEL_PERMISSAO_USUARIO = @COD_NIVEL_PERMISSAO_USUARIO";
 
                     comando.Parameters.Add("@COD_NIVEL_PERMISSAO", MySqlDbType.Int16).Value = nivel.CodigoNivelPermissaoUsuario;
                     comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = nivel.Status;
@@ -83,10 +83,10 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE NIVEL_PERMISSAO_USUARIO SET NIVEL_PERMISSAO = @NIVEL_PERMISSAO WHERE COD_NIVEL_PERMISSAO = @COD_NIVEL_PERMISSAO;";
+                    comando.CommandText = "UPDATE NIVEL_PERMISSAO_USUARIO SET NIVEL_PERMISSAO = @NIVEL_PERMISSAO WHERE COD_NIVEL_PERMISSAO_USUARIO = @COD_NIVEL_PERMISSAO_USUARIO;";
 
                     comando.Parameters.Add("@NIVEL_PERMISSAO", MySqlDbType.Text).Value = nivel.NivelPermissao;
-                    comando.Parameters.Add("@COD_NIVEL_PERMISSAO", MySqlDbType.Int16).Value = nivel.CodigoUsuario;
+                    comando.Parameters.Add("@COD_NIVEL_PERMISSAO_USUARIO", MySqlDbType.Int16).Value = nivel.CodigoUsuario;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;
@@ -117,7 +117,7 @@ namespace Persistencia.DAO
                     while (leitor.Read())
                     {
                         NivelPermissaoUsuario nivel = new NivelPermissaoUsuario();
-                        nivel.CodigoNivelPermissaoUsuario = Int16.Parse(leitor["COD_NIVEL_PERMISSAO"].ToString());
+                        nivel.CodigoNivelPermissaoUsuario = Int16.Parse(leitor["COD_NIVEL_PERMISSAO_USUARIO"].ToString());
                         nivel.NivelPermissao = leitor["NIVEL_PERMISSAO"].ToString();
                         nivel.CodigoUsuario = Int16.Parse(leitor["COD_USUARIO"].ToString());
                         nivel.Status = Int16.Parse(leitor["STATUS"].ToString());
@@ -138,7 +138,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public NivelPermissaoUsuario Buscar(int cod)
+        public NivelPermissaoUsuario Buscar(long cod)
         {
             try
             {
@@ -146,14 +146,14 @@ namespace Persistencia.DAO
                 {
                     NivelPermissaoUsuario nivel = new NivelPermissaoUsuario();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_NIVEL_PERMISSAO,NIVEL_PERMISSAO,STATUS,COD_USUARIO FROM NIVEL_PERMISSAO_USUARIO  WHERE STATUS <> 9 AND COD_NIVEL_PERMISSAO = @COD_NIVEL_PERMISSAO;";
+                    comando.CommandText = "SELECT COD_NIVEL_PERMISSAO,NIVEL_PERMISSAO,STATUS,COD_USUARIO FROM NIVEL_PERMISSAO_USUARIO  WHERE STATUS <> 9 AND COD_NIVEL_PERMISSAO_USUARIO = @COD_NIVEL_PERMISSAO_USUARIO;";
 
-                    comando.Parameters.Add("@COD_NIVEL_PERMISSAO",MySqlDbType.Int16).Value = cod;
+                    comando.Parameters.Add("@COD_NIVEL_PERMISSAO_USUARIO",MySqlDbType.Int16).Value = cod;
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     if (leitor.Read())
                     {
-                        nivel.CodigoNivelPermissaoUsuario = Int16.Parse(leitor["COD_NIVEL_PERMISSAO"].ToString());
+                        nivel.CodigoNivelPermissaoUsuario = Int16.Parse(leitor["COD_NIVEL_PERMISSAO_USUARIO"].ToString());
                         nivel.NivelPermissao = leitor["NIVEL_PERMISSAO"].ToString();
                         nivel.CodigoUsuario = Int16.Parse(leitor["COD_USUARIO"].ToString());
                         nivel.Status = Int16.Parse(leitor["STATUS"].ToString());
@@ -172,6 +172,27 @@ namespace Persistencia.DAO
             }
         }
 
+        public long Contagem()
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COUNT(COD_NIVEL_PERMISSAO_USUARIO) FROM NIVEL_PERMISSAO_USUARIO;";
+
+                    return (long)comando.ExecuteScalar();
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
 
         public void Dispose()
         {

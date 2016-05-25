@@ -85,6 +85,7 @@ namespace Persistencia.DAO
                     comando.CommandType = CommandType.Text;
                     comando.CommandText = "UPDATE SET TELEFONE = @TELEFONE WHERE COD_TELEFONE_CLIENTE = @COD_TELEFONE_CLIENTE;";
 
+                    comando.Parameters.Add("@COD_TELEFONE_CLIENTE", MySqlDbType.Int16).Value = telefone.CodigoTelefoneCliente;
                     comando.Parameters.Add("@TELEFONE", MySqlDbType.Text).Value = telefone.Telefone;
 
                     if (comando.ExecuteNonQuery() > 0)
@@ -136,7 +137,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public TelefoneCliente Buscar(int cod)
+        public TelefoneCliente Buscar(long cod)
         {
             try
             {
@@ -157,6 +158,28 @@ namespace Persistencia.DAO
                     }
 
                     return telefone;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+        public long Contagem()
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COUNT(COD_TELEFONE_CLIENTE) FROM TELEFONE_CLIENTE;";
+
+                    return (long)comando.ExecuteScalar();
                 }
             }
             catch (MySqlException)

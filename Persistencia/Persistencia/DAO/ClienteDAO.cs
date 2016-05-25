@@ -27,9 +27,10 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO CLIENTE(EMAIL) VALUES (@EMAIL);";
+                    comando.CommandText = "INSERT INTO CLIENTE(EMAIL,COD_ENDERECO) VALUES (@EMAIL,@COD_ENDERECO);";
 
                     comando.Parameters.Add("@EMAIL", MySqlDbType.Text).Value = cliente.Email;
+                    comando.Parameters.Add("@COD_ENDERECO", MySqlDbType.Text).Value = cliente.CodigoEndereco;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -82,6 +83,7 @@ namespace Persistencia.DAO
                     comando.CommandType = CommandType.Text;
                     comando.CommandText = "UPDATE CLIENTE SET EMAIL = @EMAIL WHERE COD_CLIENTE = @COD_CLIENTE;";
 
+                    comando.Parameters.Add("@COD_CLIENTE", MySqlDbType.Int16).Value = cliente.CodigoCliente;
                     comando.Parameters.Add("@EMAIL", MySqlDbType.Text).Value = cliente.Email;
 
                     if (comando.ExecuteNonQuery() > 0)
@@ -107,7 +109,7 @@ namespace Persistencia.DAO
                 {
                     List<Cliente> clientes = new List<Cliente>();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_CLIENTE,EMAIL,STATUS FROM CLIENTE WHERE STATUS <> 9;";
+                    comando.CommandText = "SELECT COD_CLIENTE,EMAIL,COD_ENDERECO,STATUS FROM CLIENTE WHERE STATUS <> 9;";
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     while (leitor.Read())
@@ -115,6 +117,7 @@ namespace Persistencia.DAO
                         Cliente cliente = new Cliente();
                         cliente.CodigoCliente = Int16.Parse(leitor["COD_CLIENTE"].ToString());
                         cliente.Email = leitor["EMAIL"].ToString();
+                        cliente.CodigoEndereco = Int16.Parse(leitor["COD_ENDERECO"].ToString());
                         cliente.Status = Int16.Parse(leitor["STATUS"].ToString());
 
                         clientes.Add(cliente);
@@ -133,7 +136,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public Cliente Buscar(int cod)
+        public Cliente Buscar(long cod)
         {
             try
             {
@@ -141,7 +144,7 @@ namespace Persistencia.DAO
                 {
                     Cliente cliente = new Cliente();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_CLIENTE,EMAIL,STATUS FROM CLIENTE WHERE STATUS <> 9 AND COD_CLIENTE = @COD_CLIENTE;";
+                    comando.CommandText = "SELECT COD_CLIENTE,EMAIL,COD_ENDERECO,STATUS FROM CLIENTE WHERE STATUS <> 9 AND COD_CLIENTE = @COD_CLIENTE;";
 
                     comando.Parameters.Add("@COD_CLIENTE", MySqlDbType.Int16).Value = cod;
                     MySqlDataReader leitor = comando.ExecuteReader();
@@ -150,10 +153,33 @@ namespace Persistencia.DAO
                     {
                         cliente.CodigoCliente = Int16.Parse(leitor["COD_CLIENTE"].ToString());
                         cliente.Email = leitor["EMAIL"].ToString();
+                        cliente.CodigoEndereco = Int16.Parse(leitor["COD_ENDERECO"].ToString());
                         cliente.Status = Int16.Parse(leitor["STATUS"].ToString());
                     }
 
                     return cliente;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+        public long Contagem()
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COUNT(COD_CLIENTE) FROM CLIENTE;";
+
+                    return (long)comando.ExecuteScalar();
                 }
             }
             catch (MySqlException)

@@ -158,7 +158,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public Reserva Buscar(int cod)
+        public Reserva Buscar(long cod)
         {
             try
             {
@@ -187,6 +187,28 @@ namespace Persistencia.DAO
                     }
 
                     return reserva;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+        public long Contagem()
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COUNT(COD_RESERVA) FROM RESERVA;";
+
+                    return (long)comando.ExecuteScalar();
                 }
             }
             catch (MySqlException)

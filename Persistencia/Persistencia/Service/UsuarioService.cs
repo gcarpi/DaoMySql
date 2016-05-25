@@ -25,7 +25,15 @@ namespace Persistencia.Service
                 if (isLimitCaract(nome, 5, 50) && isLimitCaract(rg, 8, 13) && isLimitCaract(cpf, 11, 15) &&
                     isLimitCaract(login, 5, 15) && isLimitCaract(senha, 5, 15))
                     if (isAllCaract(nome) && isRG(rg) && isCPF(cpf))
-                        return userDAO.Inserir(new Usuario(nome, rg, cpf, login, senha));
+                    {
+                        Usuario u = new Usuario();
+                        u.Nome = nome;
+                        u.RG = rg;
+                        u.CPF = cpf;
+                        u.Login = login;
+                        u.Senha = senha;
+                        return userDAO.Inserir(u);
+                    }
             return -1;
         }
 
@@ -35,23 +43,41 @@ namespace Persistencia.Service
                 if (isLimitCaract(nome, 5, 50) && isLimitCaract(rg, 8, 13) && isLimitCaract(cpf, 11, 15) &&
                     isLimitCaract(login, 5, 15) && isLimitCaract(senha, 5, 15))
                     if (isAllCaract(nome) && isRG(rg) && isCPF(cpf))
-                        return userDAO.Atualizar(new Usuario(cod_u, nome, rg, cpf, login, senha));
+                    {
+                        Usuario u = new Usuario();
+                        u.CodigoUsuario = cod_u;
+                        u.Nome = nome;
+                        u.RG = rg;
+                        u.CPF = cpf;
+                        u.Login = login;
+                        u.Senha = senha;
+                        return userDAO.Atualizar(u);
+                    }
             return false;
         }
 
         public bool Remover(int cod_user)
         {
-            return userDAO.Remover(new Usuario(cod_user, 9));
+            Usuario u = new Usuario();
+            u.CodigoUsuario = cod_user;
+            u.Status = 9;
+            return userDAO.Remover(u);
         }
 
         public bool Inativar(int cod_user)
         {
-            return userDAO.Remover(new Usuario(cod_user, 2));
+            Usuario u = new Usuario();
+            u.CodigoUsuario = cod_user;
+            u.Status = 2;
+            return userDAO.Remover(u);
         }
 
         public bool Ativar(int cod_user)
         {
-            return userDAO.Remover(new Usuario(cod_user, 1));
+            Usuario u = new Usuario();
+            u.CodigoUsuario = cod_user;
+            u.Status = 1;
+            return userDAO.Remover(u);
         }
 
         public bool Autenticar(string login, string senha)

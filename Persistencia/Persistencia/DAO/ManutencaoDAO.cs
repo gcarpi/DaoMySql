@@ -83,9 +83,9 @@ namespace Persistencia.DAO
                     comando.CommandType = CommandType.Text;
                     comando.CommandText = "UPDATE MANUTENCAO SET TIPO_MANUTENCAO = @TIPO_MANUTENCAO, OBSERVACAO = @OBSERVACAO WHERE COD_MANUTENCAO = @COD_MANUTENCAO;";
 
+                    comando.Parameters.Add("@COD_MANUTENCAO", MySqlDbType.Int16).Value = manutencao.CodigoManutencao;
                     comando.Parameters.Add("@TIPO_MANUTENCAO", MySqlDbType.Int16).Value = manutencao.TipoManutencao;
                     comando.Parameters.Add("@OBSERVACAO", MySqlDbType.Text).Value = manutencao.Observacao;
-                    comando.Parameters.Add("@COD_MANUTENCAO", MySqlDbType.Int16).Value = manutencao.CodigoManutencao;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;
@@ -137,7 +137,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public Manutencao Buscar(int cod)
+        public Manutencao Buscar(long cod)
         {
             try
             {
@@ -159,6 +159,28 @@ namespace Persistencia.DAO
                     }
 
                     return manutencao;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+        public long Contagem()
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COUNT(COD_MANUTENCAO) FROM MANUTENCAO;";
+
+                    return (long)comando.ExecuteScalar();
                 }
             }
             catch (MySqlException)

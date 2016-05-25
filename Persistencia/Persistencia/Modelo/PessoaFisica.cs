@@ -8,26 +8,7 @@ namespace Persistencia.Modelo
 {
     public class PessoaFisica
     {
-        public PessoaFisica() { }
-        public PessoaFisica(int cod_pf)
-        {
-            CodigoPessoaFisica = cod_pf;
-        }
-        public PessoaFisica(int cod_pf, string nome, string rg, string cpf, string data_n, string cnh, string passaporte, string naturalidade, int cod_c, int status)
-        {
-            CodigoPessoaFisica = cod_pf;
-            Nome = nome;
-            RG = rg;
-            CPF = cpf;
-            DataNascimento = data_n;
-            CNH = cnh;
-            Passaporte = passaporte;
-            Naturalidade = naturalidade;
-            CodigoCliente = cod_c;
-            Status = status;
-        }
-
-        public int CodigoPessoaFisica { get; set; }
+        public long CodigoPessoaFisica { get; set; }
         public string Nome { get; set; }
         public string RG { get; set; }
         public string CPF { get; set; }
@@ -35,7 +16,7 @@ namespace Persistencia.Modelo
         public string CNH { get; set; }
         public string Passaporte { get; set; }
         public string Naturalidade { get; set; }
-        public int CodigoCliente { get; set; }
+        public long CodigoCliente { get; set; }
         public int Status { get; set; }
     }
 }

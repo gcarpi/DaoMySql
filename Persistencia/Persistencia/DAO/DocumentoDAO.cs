@@ -27,10 +27,11 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO DOCUMENTO(RENAVAM,CHASSI,DATA_LICENCIAMENTO,COD_VEICULO) VALUES (@RENAVAM,@CHASSI,@DATA_LICENCIAMENTO,@COD_VEICULO);";
+                    comando.CommandText = "INSERT INTO DOCUMENTO(RENAVAM,CHASSI,PLACA,DATA_LICENCIAMENTO,COD_VEICULO) VALUES (@RENAVAM,@CHASSI,@PLACA,@DATA_LICENCIAMENTO,@COD_VEICULO);";
 
-                    comando.Parameters.Add("@DATA_RESERVA", MySqlDbType.Text).Value = documento.Renavam;
+                    comando.Parameters.Add("@RENAVAM", MySqlDbType.Text).Value = documento.Renavam;
                     comando.Parameters.Add("@CHASSI", MySqlDbType.Text).Value = documento.Chassi;
+                    comando.Parameters.Add("@PLACA", MySqlDbType.Text).Value = documento.Placa;
                     comando.Parameters.Add("@DATA_LICENCIAMENTO", MySqlDbType.Text).Value = documento.DataLicenciamento;
                     comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Text).Value = documento.CodigoVeiculo;
 
@@ -83,10 +84,12 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE DOCUMENTO SET RENAVAM = @RENAVAM, CHASSI = @CHASSI, DATA_LICENCIAMENTO = @DATA_LICENCIAMENTO WHERE COD_DOCUMENTO = @COD_DOCUMENTO";
+                    comando.CommandText = "UPDATE DOCUMENTO SET RENAVAM = @RENAVAM, CHASSI = @CHASSI, PLACA = @PLACA, DATA_LICENCIAMENTO = @DATA_LICENCIAMENTO WHERE COD_DOCUMENTO = @COD_DOCUMENTO";
 
+                    comando.Parameters.Add("@COD_DOCUMENTO", MySqlDbType.Int16).Value = documento.CodigoDocumento;
                     comando.Parameters.Add("@RENAVAM", MySqlDbType.Text).Value = documento.Renavam;
                     comando.Parameters.Add("@CHASSI", MySqlDbType.Text).Value = documento.Chassi;
+                    comando.Parameters.Add("@PLACA", MySqlDbType.Text).Value = documento.Placa;
                     comando.Parameters.Add("@DATA_LICENCIAMENTO", MySqlDbType.Text).Value = documento.DataLicenciamento;
                     comando.Parameters.Add("@COD_DOCUMENTO", MySqlDbType.Int16).Value = documento.CodigoDocumento;
 
@@ -113,7 +116,7 @@ namespace Persistencia.DAO
                 {
                     List<Documento> documentos = new List<Documento>();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_DOCUMENTO,RENAVAM,CHASSI,DATA_LICENCIAMENTO,COD_VEICULO, STATUS FROM DOCUMENTO WHERE STATUS <> 9;";
+                    comando.CommandText = "SELECT COD_DOCUMENTO,RENAVAM,CHASSI,PLACA,DATA_LICENCIAMENTO,COD_VEICULO,STATUS FROM DOCUMENTO WHERE STATUS <> 9;";
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     while (leitor.Read())
@@ -122,6 +125,7 @@ namespace Persistencia.DAO
                         documento.CodigoDocumento = Int16.Parse(leitor["COD_DOCUMENTO"].ToString());
                         documento.Renavam = leitor["RENAVAM"].ToString();
                         documento.Chassi = leitor["CHASSI"].ToString();
+                        documento.Placa = leitor["PLACA"].ToString();
                         documento.DataLicenciamento = leitor["DATA_LICENCIAMENTO"].ToString();
                         documento.CodigoVeiculo = Int16.Parse(leitor["COD_VEICULO"].ToString());
                         documento.Status = Int16.Parse(leitor["STATUS"].ToString());
@@ -142,7 +146,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public Documento Buscar(int cod)
+        public Documento Buscar(long cod)
         {
             try
             {
@@ -150,7 +154,7 @@ namespace Persistencia.DAO
                 {
                     Documento documento = new Documento();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_DOCUMENTO,RENAVAM,CHASSI,DATA_LICENCIAMENTO,COD_VEICULO, STATUS FROM DOCUMENTO WHERE STATUS <> 9 AND COD_DOCUMENTO = @COD_DOCUMENTO;";
+                    comando.CommandText = "SELECT COD_DOCUMENTO,RENAVAM,CHASSI,PLACA,DATA_LICENCIAMENTO,COD_VEICULO, STATUS FROM DOCUMENTO WHERE STATUS <> 9 AND COD_DOCUMENTO = @COD_DOCUMENTO;";
 
                     comando.Parameters.Add("@COD_DOCUMENETO", MySqlDbType.Int16).Value = cod;
                     MySqlDataReader leitor = comando.ExecuteReader();
@@ -160,12 +164,35 @@ namespace Persistencia.DAO
                         documento.CodigoDocumento = Int16.Parse(leitor["COD_DOCUMENTO"].ToString());
                         documento.Renavam = leitor["RENAVAM"].ToString();
                         documento.Chassi = leitor["CHASSI"].ToString();
+                        documento.Placa = leitor["PLACA"].ToString();
                         documento.DataLicenciamento = leitor["DATA_LICENCIAMENTO"].ToString();
                         documento.CodigoVeiculo = Int16.Parse(leitor["COD_VEICULO"].ToString());
                         documento.Status = Int16.Parse(leitor["STATUS"].ToString());
                     }
 
                     return documento;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+        public long Contagem()
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COUNT(COD_DOCUMENTO) FROM DOCUMENTO;";
+
+                    return (long)comando.ExecuteScalar();
                 }
             }
             catch (MySqlException)

@@ -83,6 +83,7 @@ namespace Persistencia.DAO
                     comando.CommandType = CommandType.Text;
                     comando.CommandText = "UPDATE CHECKLIST SET OBSERVACAO = @OBSERVACAO, STATUS_CHECKLIST = @STATUS_CHECKLIST WHERE COD_CHECKLIST = @COD_CHECKLIST;";
 
+                    comando.Parameters.Add("@COD_CHECKLIST", MySqlDbType.Int16).Value = checklist.CodigoCheckList;
                     comando.Parameters.Add("@OBSERVACAO", MySqlDbType.Text).Value = checklist.Observacao;
                     comando.Parameters.Add("@STATUS_CHECKLIST", MySqlDbType.Int16).Value = checklist.Status_CheckList;
 
@@ -136,7 +137,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public CheckList Buscar(int cod)
+        public CheckList Buscar(long cod)
         {
             try
             {
@@ -158,6 +159,28 @@ namespace Persistencia.DAO
                     }
 
                     return checklist;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+        public long Contagem()
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COUNT(COD_CHECKLIST) FROM CHECKLIST;";
+
+                    return (long)comando.ExecuteScalar();
                 }
             }
             catch (MySqlException)

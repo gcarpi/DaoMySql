@@ -84,9 +84,9 @@ namespace Persistencia.DAO
                     comando.CommandType = CommandType.Text;
                     comando.CommandText = "UPDATE CATEGORIA SET NOME = @NOME, VALOR = @VALOR WHERE COD_CATEGORIA = @COD_CATEGORIA;";
 
+                    comando.Parameters.Add("@COD_CATEGORIA", MySqlDbType.Int16).Value = categoria.CodigoCategoria;
                     comando.Parameters.Add("@NOME", MySqlDbType.Text).Value = categoria.Nome;
                     comando.Parameters.Add("@VALOR", MySqlDbType.Decimal).Value = categoria.Valor;
-                    comando.Parameters.Add("@COD_CATEGORIA", MySqlDbType.Int16).Value = categoria.CodigoCategoria;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;
@@ -119,7 +119,7 @@ namespace Persistencia.DAO
                         Categoria categoria = new Categoria();
                         categoria.CodigoCategoria = Int16.Parse(leitor["COD_CATEGORIA"].ToString());
                         categoria.Nome = leitor["NOME"].ToString();
-                        categoria.Valor = decimal.Parse(leitor["VALOR"].ToString());
+                        categoria.Valor = Decimal.Parse(leitor["VALOR"].ToString());
                         categoria.Status = Int16.Parse(leitor["STATUS"].ToString());
 
                         categorias.Add(categoria);
@@ -138,7 +138,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public Categoria Buscar(int cod)
+        public Categoria Buscar(long cod)
         {
             try
             {
@@ -155,11 +155,33 @@ namespace Persistencia.DAO
                     {
                         categoria.CodigoCategoria = Int16.Parse(leitor["COD_CATEGORIA"].ToString());
                         categoria.Nome = leitor["NOME"].ToString();
-                        categoria.Valor = decimal.Parse(leitor["VALOR"].ToString());
+                        categoria.Valor = Decimal.Parse(leitor["VALOR"].ToString());
                         categoria.Status = Int16.Parse(leitor["STATUS"].ToString());
                     }
 
                     return categoria;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+        public long Contagem()
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COUNT(COD_CATEGORIA) FROM CATEGORIA;";
+
+                    return (long)comando.ExecuteScalar();
                 }
             }
             catch (MySqlException)

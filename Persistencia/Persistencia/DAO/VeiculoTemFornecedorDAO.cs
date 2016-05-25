@@ -85,6 +85,7 @@ namespace Persistencia.DAO
                     comando.CommandType = CommandType.Text;
                     comando.CommandText = "UPDATE VEICULO_TEM_FORNECEDOR SET COD_VEICULO = @COD_VEICULO, COD_FORNECEDOR = @COD_FORNECEDOR WHERE COD_VEICULO_TEM_FORNECEDOR = @COD_VEICULO_TEM_FORNECEDOR;";
 
+                    comando.Parameters.Add("@COD_VEICULO_TEM_FORNECEDOR", MySqlDbType.Int16).Value = veiculofornecedor.CodigoVeiculoTemFornecedor;
                     comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = veiculofornecedor.CodigoVeiculo;
                     comando.Parameters.Add("@COD_FORNECEDOR", MySqlDbType.Int16).Value = veiculofornecedor.CodigoFornecedor;
 
@@ -138,7 +139,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public VeiculoTemFornecedor Buscar(int cod)
+        public VeiculoTemFornecedor Buscar(long cod)
         {
             try
             {
@@ -172,6 +173,27 @@ namespace Persistencia.DAO
             }
         }
 
+        public long Contagem()
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COUNT(COD_VEICULO_TEM_FORNECEDOR) FROM VEICULO_TEM_FORNECEDOR;";
+
+                    return (long)comando.ExecuteScalar();
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
 
         public void Dispose()
         {

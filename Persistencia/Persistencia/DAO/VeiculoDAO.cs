@@ -27,12 +27,12 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO VEICULO(MARCA,MODELO,ANO_DE_FABRICACAO,CONDICAO,VIDRO_ELETRICO,TRAVA_ELETRICA,AUTOMATICO,QUANTIDADE_PORTAS,DIRECAO_HIDRAULICA,COR,AR_CONDICIONADO,COD_CATEGORIA) VALUES (@MARCA,@MODELO,@ANO_DE_FABRICACAO,@CONDICAO,@VIDRO_ELETRICO,@TRAVA_ELETRICA,@AUTOMATICO,@QUANTIDADE_PORTAS,@DIRECAO_HIDRAULICA,@COR,@AR_CONDICIONADO,@COD_CATEGORIA);";
+                    comando.CommandText = "INSERT INTO VEICULO(MARCA,MODELO,ANO_FABRICACAO,CONDICAO,VIDRO_ELETRICO,TRAVA_ELETRICA,AUTOMATICO,QUANTIDADE_PORTAS,DIRECAO_HIDRAULICA,COR,AR_CONDICIONADO,COD_CATEGORIA) VALUES (@MARCA,@MODELO,@ANO_FABRICACAO,@CONDICAO,@VIDRO_ELETRICO,@TRAVA_ELETRICA,@AUTOMATICO,@QUANTIDADE_PORTAS,@DIRECAO_HIDRAULICA,@COR,@AR_CONDICIONADO,@COD_CATEGORIA);";
 
                     comando.Parameters.Add("@MARCA",MySqlDbType.Text).Value = veiculo.Marca;
                     comando.Parameters.Add("@MODELO",MySqlDbType.Text).Value = veiculo.Modelo;
-                    comando.Parameters.Add("@ANO_DE_FABRICACAO",MySqlDbType.Date).Value = veiculo.AnoFabricação;
-                    comando.Parameters.Add("@CONDICAO", MySqlDbType.Text).Value = veiculo.Condicao;
+                    comando.Parameters.Add("@ANO_FABRICACAO",MySqlDbType.Date).Value = veiculo.AnoFabricacao;
+                    comando.Parameters.Add("@CONDICAO", MySqlDbType.Int16).Value = veiculo.Condicao;
                     comando.Parameters.Add("@VIDRO_ELETRICO",MySqlDbType.Bit).Value = veiculo.VidroEletrico;
                     comando.Parameters.Add("@TRAVA_ELETRICA", MySqlDbType.Bit).Value = veiculo.TravaEletrica;
                     comando.Parameters.Add("@AUTOMATICO", MySqlDbType.Bit).Value = veiculo.Automatico;
@@ -91,12 +91,12 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE USUARIO SET MARCA = @MARCA, MODELO = @MODELO, ANO_DE_FABRICACAO = @ANO_DE_FABRICACAO, CONDICAO = @CONDICAO, VIDRO_ELETRICO = @VIDRO_ELETRICO, TRAVA_ELETRICA = @TRAVA_ELETRICA, AUTOMATICO = @AUTOMATICO, QUANTIDADE_PORTAS = @QUANTIDADE_PORTAS, DIRECAO_HIDRAULICA = @DIRECAO_HIDRAULICA, COR = @COR, AR_CONDICIONADO = @AR_CONDICIONADO, COD_CATEGORIA = @COD_CATEGORIA WHERE COD_VEICULO = @COD_VEICULO;";
+                    comando.CommandText = "UPDATE USUARIO SET MARCA = @MARCA, MODELO = @MODELO, ANO_FABRICACAO = @ANO_FABRICACAO, CONDICAO = @CONDICAO, VIDRO_ELETRICO = @VIDRO_ELETRICO, TRAVA_ELETRICA = @TRAVA_ELETRICA, AUTOMATICO = @AUTOMATICO, QUANTIDADE_PORTAS = @QUANTIDADE_PORTAS, DIRECAO_HIDRAULICA = @DIRECAO_HIDRAULICA, COR = @COR, AR_CONDICIONADO = @AR_CONDICIONADO, COD_CATEGORIA = @COD_CATEGORIA WHERE COD_VEICULO = @COD_VEICULO;";
 
                     comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = veiculo.CodigoVeiculo;
                     comando.Parameters.Add("@MARCA", MySqlDbType.Text).Value = veiculo.Marca;
                     comando.Parameters.Add("@MODELO", MySqlDbType.Text).Value = veiculo.Modelo;
-                    comando.Parameters.Add("@ANO_DE_FABRICACAO", MySqlDbType.Date).Value = veiculo.AnoFabricação;
+                    comando.Parameters.Add("@ANO_FABRICACAO", MySqlDbType.Date).Value = veiculo.AnoFabricacao;
                     comando.Parameters.Add("@CONDICAO", MySqlDbType.Text).Value = veiculo.Condicao;
                     comando.Parameters.Add("@VIDRO_ELETRICO", MySqlDbType.Bit).Value = veiculo.VidroEletrico;
                     comando.Parameters.Add("@TRAVA_ELETRICA", MySqlDbType.Bit).Value = veiculo.TravaEletrica;
@@ -139,8 +139,8 @@ namespace Persistencia.DAO
                         veiculo.CodigoVeiculo = int.Parse(leitor["COD_VEICULO"].ToString());
                         veiculo.Marca = leitor["MARCA"].ToString();
                         veiculo.Modelo = leitor["MODELO"].ToString();
-                        veiculo.AnoFabricação = leitor["ANO_DE_FABRICACAO"].ToString();
-                        veiculo.Condicao = leitor["CONDICAO"].ToString();
+                        veiculo.AnoFabricacao = leitor["ANO_DE_FABRICACAO"].ToString();
+                        veiculo.Condicao = Int16.Parse(leitor["CONDICAO"].ToString());
                         veiculo.VidroEletrico = bool.Parse(leitor["VIDRO_ELETRICO"].ToString());
                         veiculo.TravaEletrica = bool.Parse(leitor["TRAVA_ELETRICA"].ToString());
                         veiculo.Automatico = bool.Parse(leitor["AUTOMATICO"].ToString());
@@ -167,7 +167,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public Veiculo Buscar(int cod)
+        public Veiculo Buscar(long cod)
         {
             try
             {
@@ -185,8 +185,8 @@ namespace Persistencia.DAO
                         veiculo.CodigoVeiculo = int.Parse(leitor["COD_VEICULO"].ToString());
                         veiculo.Marca = leitor["MARCA"].ToString();
                         veiculo.Modelo = leitor["MODELO"].ToString();
-                        veiculo.AnoFabricação = leitor["ANO_DE_FABRICACAO"].ToString();
-                        veiculo.Condicao = leitor["CONDICAO"].ToString();
+                        veiculo.AnoFabricacao = leitor["ANO_DE_FABRICACAO"].ToString();
+                        veiculo.Condicao = Int16.Parse(leitor["CONDICAO"].ToString());
                         veiculo.VidroEletrico = bool.Parse(leitor["VIDRO_ELETRICO"].ToString());
                         veiculo.TravaEletrica = bool.Parse(leitor["TRAVA_ELETRICA"].ToString());
                         veiculo.Automatico = bool.Parse(leitor["AUTOMATICO"].ToString());
@@ -199,6 +199,28 @@ namespace Persistencia.DAO
                     }
 
                     return veiculo;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+        public long Contagem()
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COUNT(COD_VEICULO) FROM VEICULO;";
+
+                    return (long)comando.ExecuteScalar();
                 }
             }
             catch (MySqlException)

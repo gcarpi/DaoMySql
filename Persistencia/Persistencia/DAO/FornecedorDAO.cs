@@ -27,10 +27,14 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO FORNECEDOR(COD_FORNECEDOR,COD_PESSOA_JURIDICA) VALUES (@COD_FORNECEDOR,@COD_PESSOA_JURIDICA);";
+                    comando.CommandText = "INSERT INTO FORNECEDOR(NOME_FANTASIA,RAZAO_SOCIAL,CNPJ,INSCRICAO_ESTADUAL,EMAIL,COD_ENDERECO) VALUES (@NOME_FANTASIA,@RAZAO_SOCIAL,@CNPJ,@INSCRICAO_ESTADUAL,@EMAIL,@COD_ENDERECO);";
 
-                    comando.Parameters.Add("@COD_FORNECEDOR", MySqlDbType.Int16).Value = fornecedor.CodigoFornecedor;
-                    comando.Parameters.Add("@COD_PESSOA_JURIDICA", MySqlDbType.Int16).Value = fornecedor.CodigoPessoaJuridica;
+                    comando.Parameters.Add("@NOME_FANTASIA", MySqlDbType.Text).Value = fornecedor.NomeFantasia;
+                    comando.Parameters.Add("@RAZAO_SOCIAL", MySqlDbType.Text).Value = fornecedor.RazaoSocial;
+                    comando.Parameters.Add("@CNPJ", MySqlDbType.Text).Value = fornecedor.CNPJ;
+                    comando.Parameters.Add("@INSCRICAO_ESTADUAL", MySqlDbType.Text).Value = fornecedor.InscricaoEstadual;
+                    comando.Parameters.Add("@EMAIL", MySqlDbType.Text).Value = fornecedor.Email;
+                    comando.Parameters.Add("@COD_ENDERECO", MySqlDbType.Int16).Value = fornecedor.CodigoEndereco;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -81,10 +85,14 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE FORNECEDOR SET COD_PESSOA_JURIDICA = @COD_PESSOA_JURIDICA WHERE COD_FORNECEDOR = @COD_FORNECEDOR";
+                    comando.CommandText = "UPDATE FORNECEDOR SET NOME_FANTASIA = @NOME_FANTASIA, RAZAO_SOCIAL = @RAZAO_SOCIAL, CNPJ = @CNPJ, INSCRICAO_ESTADUAL = @INSCRICAO_ESTADUAL, EMAIL = @EMAIL WHERE COD_FORNECEDOR = @COD_FORNECEDOR";
 
                     comando.Parameters.Add("@COD_FORNECEDOR", MySqlDbType.Int16).Value = fornecedor.CodigoFornecedor;
-                    comando.Parameters.Add("@COD_PESSOA_JURIDICA", MySqlDbType.Int16).Value = fornecedor.CodigoPessoaJuridica;
+                    comando.Parameters.Add("@NOME_FANTASIA", MySqlDbType.Text).Value = fornecedor.NomeFantasia;
+                    comando.Parameters.Add("@RAZAO_SOCIAL", MySqlDbType.Text).Value = fornecedor.RazaoSocial;
+                    comando.Parameters.Add("@CNPJ", MySqlDbType.Text).Value = fornecedor.CNPJ;
+                    comando.Parameters.Add("@INSCRICAO_ESTADUAL", MySqlDbType.Text).Value = fornecedor.InscricaoEstadual;
+                    comando.Parameters.Add("@EMAIL", MySqlDbType.Text).Value = fornecedor.Email;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;
@@ -109,14 +117,19 @@ namespace Persistencia.DAO
                 {
                     List<Fornecedor> fornecedores = new List<Fornecedor>();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_FORNECEDOR,COD_PESSOA_JURIDICA,STATUS FROM FORNECEDOR WHERE STATUS <> 9;";
+                    comando.CommandText = "SELECT COD_FORNECEDOR,NOME_FANTASIA,RAZAO_SOCIAL,CNPJ,INSCRICAO_ESTADUAL,COD_ENDERECO,EMAIL,STATUS FROM FORNECEDOR WHERE STATUS <> 9;";
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     while (leitor.Read())
                     {
                         Fornecedor fornecedor = new Fornecedor();
                         fornecedor.CodigoFornecedor = Int16.Parse(leitor["COD_FORNECEDOR"].ToString());
-                        fornecedor.CodigoPessoaJuridica = Int16.Parse(leitor["COD_PESSOA_JURIDICA"].ToString());
+                        fornecedor.NomeFantasia = leitor["NOME_FANTASIA"].ToString();
+                        fornecedor.RazaoSocial = leitor["RAZAO_SOCIAL"].ToString();
+                        fornecedor.CNPJ = leitor["CNPJ"].ToString();
+                        fornecedor.InscricaoEstadual = leitor["INSCRICAO_ESTADUAL"].ToString();
+                        fornecedor.Email = leitor["EMAIL"].ToString();
+                        fornecedor.CodigoEndereco = Int16.Parse(leitor["COD_ENDERECO"].ToString());
                         fornecedor.Status = Int16.Parse(leitor["STATUS"].ToString());
 
                         fornecedores.Add(fornecedor);
@@ -135,7 +148,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public Fornecedor Buscar(int cod)
+        public Fornecedor Buscar(long cod)
         {
             try
             {
@@ -143,18 +156,45 @@ namespace Persistencia.DAO
                 {
                     Fornecedor fornecedor = new Fornecedor();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_FORNECEDOR,COD_PESSOA_JURIDICA,STATUS FROM FORNECEDOR WHERE STATUS <> 9 AND COD_FORNECEDOR = @COD_FORNECEDOR;";
+                    comando.CommandText = "SELECT COD_FORNECEDOR,NOME_FANTASIA,RAZAO_SOCIAL,CNPJ,INSCRICAO_ESTADUAL,EMAIL,COD_ENDERECO,STATUS FROM FORNECEDOR WHERE STATUS <> 9 AND COD_FORNECEDOR = @COD_FORNECEDOR;";
                     comando.Parameters.Add("COD_FORNECEDOR", MySqlDbType.Int16).Value = cod;
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     if (leitor.Read())
                     {
                         fornecedor.CodigoFornecedor = Int16.Parse(leitor["COD_FORNECEDOR"].ToString());
-                        fornecedor.CodigoPessoaJuridica = Int16.Parse(leitor["COD_PESSOA_JURIDICA"].ToString());
+                        fornecedor.NomeFantasia = leitor["NOME_FANTASIA"].ToString();
+                        fornecedor.RazaoSocial = leitor["RAZAO_SOCIAL"].ToString();
+                        fornecedor.CNPJ = leitor["CNPJ"].ToString();
+                        fornecedor.InscricaoEstadual = leitor["INSCRICAO_ESTADUAL"].ToString();
+                        fornecedor.Email = leitor["EMAIL"].ToString();
+                        fornecedor.CodigoEndereco = Int16.Parse(leitor["COD_ENDERECO"].ToString());
                         fornecedor.Status = Int16.Parse(leitor["STATUS"].ToString());
                     }
 
                     return fornecedor;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+        public long Contagem()
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COUNT(COD_FORNECEDOR) FROM FORNECEDOR;";
+
+                    return (long)comando.ExecuteScalar();
                 }
             }
             catch (MySqlException)

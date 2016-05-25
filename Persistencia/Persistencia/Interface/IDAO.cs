@@ -11,7 +11,8 @@ namespace Persistencia.Interface
         long Inserir(T model);
         bool Atualizar(T model);
         bool Remover(T model);
-        T Buscar(int cod);
         List<T> Listar();
+        T Buscar(long codigo);
+        long Contagem();
     }
 }

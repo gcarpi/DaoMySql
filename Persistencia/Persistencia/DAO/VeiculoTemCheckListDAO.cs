@@ -27,11 +27,11 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO VEICULO_TEM_MANUTENCAO(COD_VEICULO,COD_CHECKLIST,DATA_CHECAGEM) VALUES (@COD_VEICULO,@COD_CHECKLIST,@DATA_CHECAGEM);";
+                    comando.CommandText = "INSERT INTO VEICULO_TEM_MANUTENCAO(DATA_CHECAGEM,COD_VEICULO,COD_CHECKLIST) VALUES (@DATA_CHECAGEM,@COD_VEICULO,@COD_CHECKLIST);";
 
+                    comando.Parameters.Add("@DATA_CHECAGEM", MySqlDbType.Text).Value = veiculochecklist.DataChecagem;
                     comando.Parameters.Add("@COD_VEICULO", MySqlDbType.Int16).Value = veiculochecklist.CodigoVeiculo;
                     comando.Parameters.Add("@COD_CHECKLIST", MySqlDbType.Int16).Value = veiculochecklist.CodigoCheckList;
-                    comando.Parameters.Add("@DATA_CHECAGEM", MySqlDbType.Text).Value = veiculochecklist.DataChecagem;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -84,11 +84,12 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "UPDATE SET COD_VEICULO = @COD_VEICULO, COD_CHECKLIST = @COD_CHECKLIST, DATA_CHECAGEM = @DATA_CHECAGEM WHERE COD_VEICULO_TEM_MANUTENCAO = @COD_VEICULO_TEM_MANUTENCAO;";
+                    comando.CommandText = "UPDATE SET DATA_CHECAGEM = @DATA_CHECAGEM, COD_VEICULO = @COD_VEICULO, COD_CHECKLIST = @COD_CHECKLIST WHERE COD_VEICULO_TEM_MANUTENCAO = @COD_VEICULO_TEM_MANUTENCAO;";
 
+                    comando.Parameters.Add("@COD_VEICULO_TEM_CHECKLIST", MySqlDbType.Int16).Value = veiculochecklist.CodigoVeiculoTemCheckList;
+                    comando.Parameters.Add("@DATA_CHECAGEM", MySqlDbType.Text).Value = veiculochecklist.DataChecagem;
                     comando.Parameters.Add("@COD_VEICULO ", MySqlDbType.Int16).Value = veiculochecklist.CodigoVeiculo;
                     comando.Parameters.Add("@COD_CHECKLIST", MySqlDbType.Text).Value = veiculochecklist.CodigoCheckList;
-                    comando.Parameters.Add("@DATA_CHECAGEM", MySqlDbType.Text).Value = veiculochecklist.DataChecagem;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;
@@ -120,9 +121,9 @@ namespace Persistencia.DAO
                     {
                         VeiculoTemCheckList veiculochecklist = new VeiculoTemCheckList();
                         veiculochecklist.CodigoVeiculoTemCheckList = Int16.Parse(leitor["COD_VEICULO_TEM_CHECKLIST"].ToString());
+                        veiculochecklist.DataChecagem = leitor["DATA_CHECAGEM"].ToString();
                         veiculochecklist.CodigoVeiculo= Int16.Parse(leitor["COD_VEICULO"].ToString());
                         veiculochecklist.CodigoCheckList = Int16.Parse(leitor["COD_CHECKLIST"].ToString());
-                        veiculochecklist.DataChecagem= leitor["DATA_CHECAGEM"].ToString();
                         veiculochecklist.Status = Int16.Parse(leitor["STATUS"].ToString());
 
                         veiculochecklists.Add(veiculochecklist);
@@ -141,7 +142,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public VeiculoTemCheckList Buscar(int cod)
+        public VeiculoTemCheckList Buscar(long cod)
         {
             try
             {
@@ -157,13 +158,35 @@ namespace Persistencia.DAO
                     if (leitor.Read())
                     {
                         veiculochecklist.CodigoVeiculoTemCheckList = Int16.Parse(leitor["COD_VEICULO_TEM_CHECKLIST"].ToString());
+                        veiculochecklist.DataChecagem = leitor["DATA_CHECAGEM"].ToString();
                         veiculochecklist.CodigoVeiculo = Int16.Parse(leitor["COD_VEICULO"].ToString());
                         veiculochecklist.CodigoCheckList = Int16.Parse(leitor["COD_CHECKLIST"].ToString());
-                        veiculochecklist.DataChecagem = leitor["DATA_CHECAGEM"].ToString();
                         veiculochecklist.Status = Int16.Parse(leitor["STATUS"].ToString());
                     }
 
                     return veiculochecklist;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+        public long Contagem()
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COUNT(COD_VEICULO_TEM_CHECKLIST) FROM VEICULO_TEM_CHECKLIST;";
+
+                    return (long)comando.ExecuteScalar();
                 }
             }
             catch (MySqlException)

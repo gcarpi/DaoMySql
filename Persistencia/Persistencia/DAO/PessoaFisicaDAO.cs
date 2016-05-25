@@ -152,7 +152,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public PessoaFisica Buscar(int cod)
+        public PessoaFisica Buscar(long cod)
         {
             try
             {
@@ -180,6 +180,28 @@ namespace Persistencia.DAO
                     }
 
                     return pessoa;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+        public long Contagem()
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COUNT(COD_PESSOA_FISICA) FROM PESSOA_FISICA;";
+
+                    return (long)comando.ExecuteScalar();
                 }
             }
             catch (MySqlException)

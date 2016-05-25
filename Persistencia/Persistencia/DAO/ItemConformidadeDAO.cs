@@ -27,10 +27,10 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO ITEM_CONFORMIDADE (COD_CHECKLIST,ITEM) VALUES (@COD_CHECKLIST,@ITEM);";
+                    comando.CommandText = "INSERT INTO ITEM_CONFORMIDADE (ITEM,COD_CHECKLIST) VALUES (@ITEM,@COD_CHECKLIST);";
 
-                    comando.Parameters.Add("@COD_CHECKLIST", MySqlDbType.Int16).Value = item.CodigoCheckList;
                     comando.Parameters.Add("@ITEM", MySqlDbType.Text).Value = item.Item;
+                    comando.Parameters.Add("@COD_CHECKLIST", MySqlDbType.Int16).Value = item.CodigoCheckList;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -83,8 +83,9 @@ namespace Persistencia.DAO
                 {
                     comando.CommandType = CommandType.Text;
                     comando.CommandText = "UPDATE ITEM_CONFORMIDADE SET ITEM = @ITEM WHERE COD_ITEM = @COD_ITEM;";
+
+                    comando.Parameters.Add("@COD_ITEM", MySqlDbType.Int16).Value = item.CodigoItem;
                     comando.Parameters.Add("@ITEM", MySqlDbType.Text).Value = item.Item;
-                    comando.Parameters.Add("@STATUS", MySqlDbType.Int16).Value = item.Status;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return true;
@@ -109,7 +110,7 @@ namespace Persistencia.DAO
                 {
                     List<ItemConformidade> items = new List<ItemConformidade>();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_ITEM,ITEM,STATUS FROM ITEM_CONFORMIDADE WHERE STATUS <> 9;";
+                    comando.CommandText = "SELECT COD_ITEM,ITEM,COD_CHECKLIST,STATUS FROM ITEM_CONFORMIDADE WHERE STATUS <> 9;";
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     while (leitor.Read())
@@ -117,6 +118,7 @@ namespace Persistencia.DAO
                         ItemConformidade item = new ItemConformidade();
                         item.CodigoItem = Int16.Parse(leitor["COD_ITEM"].ToString());
                         item.Item = leitor["ITEM"].ToString();
+                        item.CodigoCheckList = Int16.Parse(leitor["COD_CHECKLIST"].ToString());
                         item.Status = Int16.Parse(leitor["STATUS"].ToString());
 
                         items.Add(item);
@@ -135,7 +137,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public ItemConformidade Buscar(int cod)
+        public ItemConformidade Buscar(long cod)
         {
             try
             {
@@ -143,7 +145,7 @@ namespace Persistencia.DAO
                 {
                     ItemConformidade item = new ItemConformidade();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_ITEM,ITEM,STATUS FROM ITEM_CONFORMIDADE WHERE STATUS <> 9; AND COD_ITEM = @COD_ITEM";
+                    comando.CommandText = "SELECT COD_ITEM,ITEM,COD_CHECKLIST,STATUS FROM ITEM_CONFORMIDADE WHERE STATUS <> 9; AND COD_ITEM = @COD_ITEM";
 
                     comando.Parameters.Add("@COD_ITEM",MySqlDbType.Int16).Value = cod;
                     MySqlDataReader leitor = comando.ExecuteReader();
@@ -152,10 +154,33 @@ namespace Persistencia.DAO
                     {
                         item.CodigoItem = Int16.Parse(leitor["COD_ITEM"].ToString());
                         item.Item = leitor["ITEM"].ToString();
+                        item.CodigoCheckList = Int16.Parse(leitor["COD_CHECKLIST"].ToString());
                         item.Status = Int16.Parse(leitor["STATUS"].ToString());
                     }
 
                     return item;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+        public long Contagem()
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COUNT(COD_ITEM) FROM ITEM_CONFORMIDADE;";
+
+                    return (long)comando.ExecuteScalar();
                 }
             }
             catch (MySqlException)

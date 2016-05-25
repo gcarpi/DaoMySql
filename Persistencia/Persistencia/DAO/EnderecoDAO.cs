@@ -27,15 +27,13 @@ namespace Persistencia.DAO
                 using (MySqlCommand comando = _connection.Buscar().CreateCommand())
                 {
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "INSERT INTO ENDERECO (CEP,BAIRRO,NUMERO,CIDADE,ESTADO,COD_FORNECEDOR,COD_CLIENTE) VALUES (@CEP,@BAIRRO,@NUMERO,@CIDADE,@ESTADO,@COD_FORNECEDOR,@COD_CLIENTE);";
+                    comando.CommandText = "INSERT INTO ENDERECO (CEP,BAIRRO,NUMERO,CIDADE,ESTADO) VALUES (@CEP,@BAIRRO,@NUMERO,@CIDADE,@ESTADO);";
 
                     comando.Parameters.Add("@CEP", MySqlDbType.Text).Value = endereco.CEP;
                     comando.Parameters.Add("@BAIRRO", MySqlDbType.Text).Value = endereco.Bairro;
-                    comando.Parameters.Add("@NUMERO", MySqlDbType.Int16).Value = endereco.Numero;
+                    comando.Parameters.Add("@NUMERO", MySqlDbType.Text).Value = endereco.Numero;
                     comando.Parameters.Add("@CIDADE", MySqlDbType.Text).Value = endereco.Cidade;
                     comando.Parameters.Add("@ESTADO", MySqlDbType.Text).Value = endereco.Estado;
-                    comando.Parameters.Add("@COD_FORNECEDOR", MySqlDbType.Int16).Value = endereco.CodigoEndereco;
-                    comando.Parameters.Add("@COD_CLIENTE", MySqlDbType.Int16).Value = endereco.CodigoCliente;
 
                     if (comando.ExecuteNonQuery() > 0)
                         return comando.LastInsertedId;
@@ -91,7 +89,7 @@ namespace Persistencia.DAO
                     comando.Parameters.Add("@COD_ENDERECO", MySqlDbType.Int16).Value = endereco.CodigoEndereco;
                     comando.Parameters.Add("@CEP", MySqlDbType.Text).Value = endereco.CEP;
                     comando.Parameters.Add("@BAIRRO", MySqlDbType.Text).Value = endereco.Bairro;
-                    comando.Parameters.Add("@NUMERO", MySqlDbType.Int16).Value = endereco.Numero;
+                    comando.Parameters.Add("@NUMERO", MySqlDbType.Text).Value = endereco.Numero;
                     comando.Parameters.Add("@CIDADE", MySqlDbType.Text).Value = endereco.Cidade;
                     comando.Parameters.Add("@ESTADO", MySqlDbType.Text).Value = endereco.Estado;
 
@@ -118,7 +116,7 @@ namespace Persistencia.DAO
                 {
                     List<Endereco> enderecos = new List<Endereco>();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_ENDERECO,CEP,BAIRRO,NUMERO,CIDADE,ESTADO,STATUS,COD_FORNECEDOR,COD_CLIENTE FROM ENDERECO WHERE STATUS <> 9;";
+                    comando.CommandText = "SELECT COD_ENDERECO,CEP,BAIRRO,NUMERO,CIDADE,ESTADO,STATUS FROM ENDERECO WHERE STATUS <> 9;";
                     MySqlDataReader leitor = comando.ExecuteReader();
 
                     while (leitor.Read())
@@ -127,12 +125,10 @@ namespace Persistencia.DAO
                         endereco.CodigoEndereco = Int16.Parse(leitor["COD_ENDERECO"].ToString());
                         endereco.CEP = leitor["CEP"].ToString();
                         endereco.Bairro = leitor["BAIRRO"].ToString();
-                        endereco.Numero = Int16.Parse(leitor["NUMERO"].ToString());
+                        endereco.Numero = leitor["NUMERO"].ToString();
                         endereco.Cidade = leitor["CIDADE"].ToString();
                         endereco.Estado = leitor["ESTADO"].ToString();
                         endereco.Status = Int16.Parse(leitor["STATUS"].ToString());
-                        endereco.CodigoFornecedor = Int16.Parse(leitor["COD_FORNECEDOR"].ToString());
-                        endereco.CodigoCliente = Int16.Parse(leitor["COD_CLIENTE"].ToString());
 
                         enderecos.Add(endereco);
                     }
@@ -150,7 +146,7 @@ namespace Persistencia.DAO
             }
         }
 
-        public Endereco Buscar(int cod)
+        public Endereco Buscar(long cod)
         {
             try
             {
@@ -158,7 +154,7 @@ namespace Persistencia.DAO
                 {
                     Endereco endereco = new Endereco();
                     comando.CommandType = CommandType.Text;
-                    comando.CommandText = "SELECT COD_ENDERECO,CEP,BAIRRO,NUMERO,CIDADE,ESTADO,STATUS,COD_FORNECEDOR,COD_CLIENTE FROM ENDERECO WHERE STATUS <> 9 AND COD_ENDERECO = @COD_ENDERECO;";
+                    comando.CommandText = "SELECT COD_ENDERECO,CEP,BAIRRO,NUMERO,CIDADE,ESTADO,STATUS FROM ENDERECO WHERE STATUS <> 9 AND COD_ENDERECO = @COD_ENDERECO;";
 
                     comando.Parameters.Add("COD_ENDERECO", MySqlDbType.Int16).Value = cod;
                     MySqlDataReader leitor = comando.ExecuteReader();
@@ -168,15 +164,35 @@ namespace Persistencia.DAO
                         endereco.CodigoEndereco = Int16.Parse(leitor["COD_ENDERECO"].ToString());
                         endereco.CEP = leitor["CEP"].ToString();
                         endereco.Bairro = leitor["BAIRRO"].ToString();
-                        endereco.Numero = Int16.Parse(leitor["NUMERO"].ToString());
+                        endereco.Numero = leitor["NUMERO"].ToString();
                         endereco.Cidade = leitor["CIDADE"].ToString();
                         endereco.Estado = leitor["ESTADO"].ToString();
                         endereco.Status = Int16.Parse(leitor["STATUS"].ToString());
-                        endereco.CodigoFornecedor = Int16.Parse(leitor["COD_FORNECEDOR"].ToString());
-                        endereco.CodigoCliente = Int16.Parse(leitor["COD_CLIENTE"].ToString());
                     }
 
                     return endereco;
+                }
+            }
+            catch (MySqlException)
+            {
+                throw;
+            }
+            finally
+            {
+                _connection.Fechar();
+            }
+        }
+
+        public long Contagem()
+        {
+            try
+            {
+                using (MySqlCommand comando = _connection.Buscar().CreateCommand())
+                {
+                    comando.CommandType = CommandType.Text;
+                    comando.CommandText = "SELECT COUNT(COD_ENDERECO) FROM ENDERECO;";
+
+                    return (long)comando.ExecuteScalar();
                 }
             }
             catch (MySqlException)
