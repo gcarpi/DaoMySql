@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access">
+  <Class Name="Persistencia.DAO.CategoriaDAO" BaseTypeListCollapsed="true">
+    <Position X="5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\CategoriaDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.CheckListDAO" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\CheckListDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.ClienteDAO" BaseTypeListCollapsed="true">
+    <Position X="8" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\ClienteDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.DocumentoDAO" BaseTypeListCollapsed="true">
+    <Position X="14" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\DocumentoDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.EnderecoDAO" BaseTypeListCollapsed="true">
+    <Position X="11" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\EnderecoDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.FornecedorDAO" BaseTypeListCollapsed="true">
+    <Position X="9.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\FornecedorDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.ItemConformidadeDAO" BaseTypeListCollapsed="true">
+    <Position X="14" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\ItemConformidadeDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.ManutencaoDAO" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\ManutencaoDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.NivelPermissaoDAO" BaseTypeListCollapsed="true">
+    <Position X="12.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\NivelPermissaoDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.PermissaoDAO" BaseTypeListCollapsed="true">
+    <Position X="2" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\PermissaoDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.PessoaFisicaDAO" BaseTypeListCollapsed="true">
+    <Position X="3.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\PessoaFisicaDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.PessoaJuridicaDAO" BaseTypeListCollapsed="true">
+    <Position X="9.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\PessoaJuridicaDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.ReservaDAO" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="8" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\ReservaDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.TelefoneClienteDAO" BaseTypeListCollapsed="true">
+    <Position X="8" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\TelefoneClienteDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.TelefoneFornecedorDAO" BaseTypeListCollapsed="true">
+    <Position X="6.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\TelefoneFornecedorDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.UsuarioDAO" BaseTypeListCollapsed="true">
+    <Position X="11" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\UsuarioDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.VeiculoDAO" BaseTypeListCollapsed="true">
+    <Position X="3.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\VeiculoDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.VeiculoTemCheckListDAO" BaseTypeListCollapsed="true">
+    <Position X="5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\VeiculoTemCheckListDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.VeiculoTemFornecedorDAO" BaseTypeListCollapsed="true">
+    <Position X="2" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\VeiculoTemFornecedorDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.DAO.VeiculoTemManutencaoDAO" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAGAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAJAA=</HashCode>
+      <FileName>DAO\VeiculoTemManutencaoDAO.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.Modelo.Categoria">
+    <Position X="7.5" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAEAAAgAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Modelo\Categoria.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.CheckList">
+    <Position X="6" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAIAAAAAAAAIAAAAAAgA=</HashCode>
+      <FileName>Modelo\CheckList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.Cliente">
+    <Position X="9" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEACAAAAAAAAIAAAAAAAAAAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Modelo\Cliente.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.Documento">
+    <Position X="6" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAEAAAAACAAAAAAAAAAAEAAAACEAAAAAAAAgAA=</HashCode>
+      <FileName>Modelo\Documento.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.Endereco">
+    <Position X="4.5" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAEAABAAAAAAAAAAACAAAAAAABAAAAAAAABAAg=</HashCode>
+      <FileName>Modelo\Endereco.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.Fornecedor">
+    <Position X="7.5" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgEAAAAEACAAAAAAAAEAAAAAEAAIAABAAAAAAAAAAAA=</HashCode>
+      <FileName>Modelo\Fornecedor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.ItemConformidade">
+    <Position X="10.5" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAQAEAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Modelo\ItemConformidade.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.Manutencao">
+    <Position X="10.5" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAgAAgA=</HashCode>
+      <FileName>Modelo\Manutencao.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.NivelPermissaoUsuario">
+    <Position X="9" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAEAQAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modelo\NivelPermissaoUsuario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.Permissao">
+    <Position X="13.5" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAABAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAQ=</HashCode>
+      <FileName>Modelo\Permissao.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.PessoaFisica">
+    <Position X="9" Y="20.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIEAAAAAAAAAAIAABCAACJAAACAAAAAAAEAAAA=</HashCode>
+      <FileName>Modelo\PessoaFisica.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.PessoaJuridica">
+    <Position X="9" Y="18.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAEAAAAAAAAAAMAAAAAEAAKAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modelo\PessoaJuridica.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.Reserva">
+    <Position X="15" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAUSQAAAAAAAAIAAAAAEIAAAAAEAAAAAAAAABA=</HashCode>
+      <FileName>Modelo\Reserva.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.TelefoneCliente">
+    <Position X="10.5" Y="18.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEgAAAAAAAAAIAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Modelo\TelefoneCliente.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.TelefoneFornecedor">
+    <Position X="7.5" Y="19.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAEgAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <FileName>Modelo\TelefoneFornecedor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.Usuario">
+    <Position X="13.5" Y="16.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIEAQAAAAAAAAAAAACAACAAAAAAAgAQAAEAAAA=</HashCode>
+      <FileName>Modelo\Usuario.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.Veiculo">
+    <Position X="12" Y="17.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAEAIAAAAAEIAACAAAAAUEgAAAEAAgAgAAQAAA=</HashCode>
+      <FileName>Modelo\Veiculo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.VeiculoTemCheckList">
+    <Position X="10.5" Y="20.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAEAAIAACAAAAI=</HashCode>
+      <FileName>Modelo\VeiculoTemCheckList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.VeiculoTemFornecedor">
+    <Position X="12" Y="20.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAEAAAAAAAAABAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Modelo\VeiculoTemFornecedor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Modelo.VeiculoTemManutencao">
+    <Position X="13.5" Y="19.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAECBAAAAAAAAAAAAQAAAAAAAAEAAAAAAgAAAA=</HashCode>
+      <FileName>Modelo\VeiculoTemManutencao.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Program">
+    <Position X="6" Y="19" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Service.UsuarioService">
+    <Position X="5.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BQAAAAASAEAAACAABAEAA4AAAAAAQAAAEBAgAAQAAAA=</HashCode>
+      <FileName>Service\UsuarioService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Util.Config">
+    <Position X="12" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAICAAAAAAACAQAAQAAAA=</HashCode>
+      <FileName>Util\Config.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Persistencia.Util.Connection" BaseTypeListCollapsed="true">
+    <Position X="15.5" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAEACAAAAEAAAAAAgAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>Util\Connection.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Persistencia.Util.Util">
+    <Position X="4.25" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Util\Util.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Persistencia.Interface.IConnection" Collapsed="true">
+    <Position X="0.5" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAEAAAAAAEAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Interface\IConnection.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Persistencia.Interface.IDAO&lt;T&gt;" Collapsed="true">
+    <Position X="2.5" Y="15" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAAAAAAAEAAwAAAAAAAAAAAAAgAAAAIAA=</HashCode>
+      <FileName>Interface\IDAO.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="System.IDisposable" Collapsed="true">
+    <Position X="1.25" Y="16.25" Width="1.5" />
+    <TypeIdentifier />
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
